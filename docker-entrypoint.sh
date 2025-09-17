@@ -20,14 +20,18 @@ fi
 
 # Function to start backend server
 start_backend() {
-    echo "🔧 Starting backend API server..."
+    echo "🔧 Starting backend API server (HTTP mode for Docker)..."
+    echo "📡 API will be available at http://localhost:8355/api"
+    echo "💡 For MCP client integration, use the MCP server directly (not in Docker)"
     cd /app/server
     exec node index.js
 }
 
 # Function to start MCP server
 start_mcp() {
-    echo "🤖 Starting MCP server..."
+    echo "🤖 Starting MCP server (stdio mode for direct client integration)..."
+    echo "⚠️  Note: MCP server is designed for direct stdio communication, not Docker"
+    echo "💡 Use this mode only when connecting MCP clients directly to the container"
     cd /app/mcp-server
     exec node index.js
 }
