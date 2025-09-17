@@ -7,14 +7,19 @@
   "repository": "https://github.com/DevMayur/SimpleCheckList",
   "homepage": "https://github.com/DevMayur/SimpleCheckList",
   "keywords": [
+    "mcp-server",
     "task-management",
     "project-management",
     "productivity",
     "hierarchical-organization",
     "ai-planning",
     "analytics",
+    "claude-desktop",
+    "anthropic",
+    "docker",
     "sqlite",
-    "mcp-server"
+    "open-source",
+    "community"
   ],
   "capabilities": {
     "tools": true,

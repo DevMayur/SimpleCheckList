@@ -9,9 +9,19 @@
 
 ## 🚀 Quick Start
 
+### For Everyone (Docker - Recommended):
 ```bash
-# Clone the repository
-git clone https://github.com/mayurkakade/SimpleCheckList.git
+# One command to run globally available MCP server
+docker run -p 8355:8355 simplechecklist/mcp-server:latest
+
+# Access the API at http://localhost:8355/api/health
+# MCP server ready for Claude Desktop integration!
+```
+
+### For Developers:
+```bash
+# Clone the repository for development
+git clone https://github.com/DevMayur/SimpleCheckList.git
 cd SimpleCheckList
 
 # Quick setup (installs dependencies and initializes database)
