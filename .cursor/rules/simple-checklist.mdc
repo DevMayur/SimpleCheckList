@@ -1,0 +1,340 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+
+# SimpleCheckList MCP - AI Agent Integration Rules
+# =================================================
+
+## 🎯 OVERVIEW
+This file contains rules and guidelines for AI coding agents to effectively utilize the SimpleCheckList MCP server for complete project management and development workflows.
+
+## 📋 CORE PRINCIPLES
+
+### 1. **Project-First Approach**
+- Always start by creating a project before writing any code
+- Use descriptive project names that reflect the actual development goal
+- Include comprehensive project descriptions with scope and objectives
+
+### 2. **Hierarchical Organization**
+- Structure projects using the hierarchy: Project → Groups → Task Lists → Tasks → Subtasks
+- Group related functionality together (e.g., Frontend, Backend, Database, Testing)
+- Create task lists for specific features or components
+- Break down complex tasks into manageable subtasks
+
+### 3. **Progressive Development**
+- Mark tasks as completed as you implement features
+- Update task priorities based on dependencies and blockers
+- Use task metadata to store technical details, file paths, and implementation notes
+
+## 🔧 MCP TOOLS USAGE GUIDE
+
+### **Project Management Tools**
+
+#### `create_project`
+**When to use:** At the start of every development session
+**Best practices:**
+```javascript
+// Example usage
+{
+  name: "E-commerce Platform",
+  description: "Full-stack e-commerce application with React frontend, Node.js backend, and PostgreSQL database",
+  color: "#2563EB"
+}
+```
+
+#### `get_project_stats`
+**When to use:** Before providing project status updates or making planning decisions
+**Purpose:** Get real-time completion metrics and progress tracking
+
+### **Organizational Tools**
+
+#### `create_group`
+**Standard groups to create:**
+- **Frontend** (UI components, styling, user experience)
+- **Backend** (API endpoints, business logic, authentication)
+- **Database** (Schema design, migrations, data models)
+- **Testing** (Unit tests, integration tests, E2E tests)
+- **DevOps** (CI/CD, deployment, monitoring)
+- **Documentation** (README, API docs, user guides)
+
+#### `create_task_list`
+**Examples of task lists:**
+- Frontend Group: "User Authentication UI", "Product Catalog", "Shopping Cart"
+- Backend Group: "User Management API", "Payment Processing", "Order Management"
+- Database Group: "User Schema", "Product Schema", "Order Schema"
+
+### **Task Management Tools**
+
+#### `create_task`
+**Task creation best practices:**
+```javascript
+// High-level feature task
+{
+  title: "Implement user authentication system",
+  description: "Create complete user auth with registration, login, password reset, and JWT tokens",
+  priority: "high",
+  metadata: {
+    files: ["auth.js", "user.model.js", "auth.routes.js"],
+    dependencies: ["database setup", "JWT library installation"],
+    acceptance_criteria: [
+      "Users can register with email/password",
+      "Users can login and receive JWT token",
+      "Password reset functionality works",
+      "Protected routes require authentication"
+    ]
+  }
+}
+
+// Implementation task
+{
+  title: "Create user registration endpoint",
+  description: "POST /api/auth/register - validates input, hashes password, saves to database",
+  priority: "high",
+  metadata: {
+    endpoint: "POST /api/auth/register",
+    file: "routes/auth.js",
+    tests: "tests/auth.test.js"
+  }
+}
+```
+
+#### `create_subtask`
+**Subtask breakdown examples:**
+- "Set up password hashing with bcrypt"
+- "Implement email validation"
+- "Create user model with Mongoose/Sequelize"
+- "Add input sanitization"
+- "Write unit tests for registration"
+
+## 🎯 DEVELOPMENT WORKFLOW INTEGRATION
+
+### **Phase 1: Project Initialization**
+1. Use `create_project` with comprehensive description
+2. Create standard groups (Frontend, Backend, Database, etc.)
+3. Use `create_project_plan` prompt for AI-assisted planning
+4. Create initial task lists for major features
+
+### **Phase 2: Feature Development**
+1. Before implementing any feature:
+   - Create specific tasks with detailed descriptions
+   - Break complex tasks into subtasks
+   - Set appropriate priorities based on dependencies
+2. During implementation:
+   - Update task metadata with file paths and technical details
+   - Mark subtasks as completed as you finish them
+3. After implementation:
+   - Mark main task as completed
+   - Update project stats to track progress
+
+### **Phase 3: Testing and Deployment**
+1. Create testing tasks for each implemented feature
+2. Use task metadata to link tests to their corresponding features
+3. Create deployment tasks with environment-specific details
+
+## 📊 PROGRESS TRACKING RULES
+
+### **Automatic Status Updates**
+- Always call `toggle_task_completion` when finishing a task
+- Update task metadata with implementation details and file paths
+- Use `get_project_stats` before major development decisions
+
+### **Progress Reporting**
+- Use `analyze_project_progress` prompt for detailed progress analysis
+- Generate status reports using `generate_status_report` prompt
+- Include completion percentages in development updates
+
+## 🔍 RESOURCE UTILIZATION
+
+### **Real-time Project Data**
+Use these resources for informed development decisions:
+
+#### `checklist://projects`
+**When to use:** Planning new features or assessing project scope
+**Contains:** All projects with metadata and statistics
+
+#### `checklist://tasks/all`
+**When to use:** Cross-project analysis or identifying patterns
+**Contains:** All tasks with completion status and details
+
+#### `checklist://stats/summary`
+**When to use:** System-wide productivity analysis
+**Contains:** Overall completion rates and priority distributions
+
+#### `checklist://projects/{id}/hierarchy`
+**When to use:** Understanding complete project structure
+**Contains:** Full project tree with all levels of organization
+
+## 🎨 PROMPT UTILIZATION
+
+### **Project Planning**
+```javascript
+// Use create_project_plan prompt
+{
+  project_name: "Social Media Dashboard",
+  project_description: "Analytics dashboard for social media management",
+  complexity: "moderate"
+}
+```
+
+### **Task Breakdown**
+```javascript
+// Use suggest_task_breakdown prompt
+{
+  task_description: "Implement real-time chat system with WebSocket support",
+  priority: "high"
+}
+```
+
+### **Progress Analysis**
+```javascript
+// Use analyze_project_progress prompt
+{
+  project_id: "project-uuid-here"
+}
+```
+
+## 🛡️ BEST PRACTICES FOR AI AGENTS
+
+### **1. Context Awareness**
+- Always check existing project structure before creating new elements
+- Use `get_project_stats` to understand current progress
+- Reference related tasks when creating new ones
+
+### **2. Consistent Naming**
+- Use descriptive, consistent naming conventions
+- Include technical details in task descriptions
+- Use metadata for storing implementation specifics
+
+### **3. Dependency Management**
+- Create tasks in logical dependency order
+- Use task descriptions to note prerequisites
+- Update priorities based on blocking dependencies
+
+### **4. Documentation Integration**
+- Create documentation tasks alongside feature tasks
+- Include API documentation in backend task metadata
+- Link code files to their corresponding tasks
+
+### **5. Testing Strategy**
+- Create testing tasks for every feature
+- Include test file paths in task metadata
+- Track test coverage through task completion
+
+## 🚀 ADVANCED INTEGRATION PATTERNS
+
+### **Feature Branch Workflow**
+```javascript
+// Create task with branch information
+{
+  title: "User profile management feature",
+  description: "Complete user profile CRUD operations",
+  metadata: {
+    branch: "feature/user-profile",
+    files: ["profile.component.tsx", "profile.service.ts", "profile.routes.js"],
+    pull_request: "https://github.com/repo/pulls/123"
+  }
+}
+```
+
+### **Code Review Integration**
+```javascript
+// Update task after code review
+{
+  metadata: {
+    code_review: {
+      reviewer: "senior-dev",
+      status: "approved",
+      comments: "Good implementation, minor style fixes needed"
+    }
+  }
+}
+```
+
+### **Deployment Tracking**
+```javascript
+// Deployment task metadata
+{
+  title: "Deploy user authentication to staging",
+  metadata: {
+    environment: "staging",
+    deployment_url: "https://staging.app.com",
+    deployment_date: "2024-01-15T10:30:00Z",
+    version: "v1.2.0"
+  }
+}
+```
+
+## 📈 PRODUCTIVITY METRICS
+
+### **Track These Metrics**
+- Tasks completed per development session
+- Average task completion time
+- Feature delivery velocity
+- Bug fix turnaround time
+
+### **Use These Tools for Metrics**
+- `get_project_stats` for completion rates
+- `get_all_tasks` for velocity analysis
+- `generate_status_report` for comprehensive metrics
+
+## 🎯 INTEGRATION EXAMPLES
+
+### **Starting a New Web Application**
+```javascript
+// 1. Create project
+create_project({
+  name: "Task Management Web App",
+  description: "Full-stack task management application with React, Node.js, and MongoDB",
+  color: "#10B981"
+})
+
+// 2. Create groups
+create_group({ project_id, name: "Frontend", description: "React UI components and pages" })
+create_group({ project_id, name: "Backend", description: "Node.js API and business logic" })
+create_group({ project_id, name: "Database", description: "MongoDB schema and operations" })
+
+// 3. Create task lists
+create_task_list({ group_id: frontend_group_id, name: "Authentication UI" })
+create_task_list({ group_id: backend_group_id, name: "User Management API" })
+
+// 4. Create detailed tasks
+create_task({
+  task_list_id: auth_ui_list_id,
+  title: "Create login form component",
+  description: "React component with form validation and error handling",
+  priority: "high",
+  metadata: {
+    component: "LoginForm.tsx",
+    tests: "LoginForm.test.tsx",
+    styling: "LoginForm.module.css"
+  }
+})
+```
+
+## 🔧 ERROR HANDLING
+
+### **When MCP Calls Fail**
+- Always check if the project/task exists before referencing
+- Use proper error handling for all MCP tool calls
+- Provide fallback behavior when MCP is unavailable
+
+### **Data Consistency**
+- Verify task completion before marking as done
+- Check dependencies before creating new tasks
+- Validate project structure before major changes
+
+## 📝 DOCUMENTATION REQUIREMENTS
+
+### **Task Documentation**
+- Include file paths in task metadata
+- Document API endpoints in backend tasks
+- Link related tasks and dependencies
+
+### **Project Documentation**
+- Maintain README updates as tasks
+- Create documentation tasks for major features
+- Include setup and deployment instructions
+
+This rule file ensures AI agents can leverage the full power of the SimpleCheckList MCP server for comprehensive project management and development workflows! 🎯

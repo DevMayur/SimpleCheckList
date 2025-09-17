@@ -1,0 +1,26 @@
+{
+  "name": "simple-checklist",
+  "version": "1.0.0",
+  "description": "Advanced SimpleCheckList with MCP server and SQLite database",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm start",
+    "mcp": "cd mcp-server && npm run dev",
+    "build": "cd client && npm run build",
+    "start": "cd server && npm start",
+    "test": "node test-setup.js",
+    "setup": "./setup.sh",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up",
+    "docker:down": "docker-compose down"
+  },
+  "keywords": ["checklist", "todo", "mcp", "sqlite", "mern"],
+  "author": "SimpleCheckList Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "axios": "^1.6.2"
+  }
+}

@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8354:3000"
+      - "8355:5000"
+    volumes:
+      - ./data:/app/data
+      - ./server:/app/server
+      - ./client:/app/client
+      - ./mcp-server:/app/mcp-server
+    environment:
+      - NODE_ENV=production
+      - DATABASE_PATH=/app/data/checklist.db
+      - MCP_PORT=3001
+    depends_on:
+      - db
+    networks:
+      - checklist-network
+
+  db:
+    image: alpine:latest
+    volumes:
+      - ./data:/data
+    command: sh -c "apk add --no-cache sqlite && mkdir -p /data && touch /data/checklist.db && tail -f /dev/null"
+    networks:
+      - checklist-network
+
+networks:
+  checklist-network:
+    driver: bridge

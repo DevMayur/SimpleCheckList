@@ -1,0 +1,80 @@
+{
+  "name": "simple-checklist",
+  "version": "1.0.0",
+  "description": "Advanced task and project management MCP server with hierarchical organization, AI-powered planning prompts, and comprehensive analytics",
+  "author": "SimpleCheckList Team",
+  "license": "MIT",
+  "repository": "https://github.com/mayurkakade/SimpleCheckList",
+  "homepage": "https://github.com/mayurkakade/SimpleCheckList",
+  "keywords": [
+    "task-management",
+    "project-management",
+    "productivity",
+    "hierarchical-organization",
+    "ai-planning",
+    "analytics",
+    "sqlite",
+    "mcp-server"
+  ],
+  "capabilities": {
+    "tools": true,
+    "resources": true,
+    "prompts": true,
+    "logging": true
+  },
+  "tools": 20,
+  "resources": 5,
+  "prompts": 4,
+  "categories": [
+    "productivity",
+    "task-management", 
+    "project-management",
+    "analytics"
+  ],
+  "installation": {
+    "npm": "simple-checklist-mcp-server",
+    "docker": "simplechecklist/mcp-server",
+    "local": {
+      "command": "node",
+      "args": ["mcp-server/index.js"],
+      "env": {
+        "API_BASE_URL": "http://localhost:8355/api"
+      }
+    }
+  },
+  "requirements": {
+    "node": ">=18.0.0",
+    "dependencies": {
+      "@modelcontextprotocol/sdk": "^0.4.0",
+      "axios": "^1.6.2",
+      "dotenv": "^16.3.1"
+    }
+  },
+  "features": [
+    "Hierarchical project organization (Projects → Groups → Task Lists → Tasks → Subtasks)",
+    "Complete CRUD operations for all entity types",
+    "AI-powered project planning prompts",
+    "Real-time analytics and progress tracking",
+    "Priority management and due date tracking",
+    "Rich metadata support for tasks",
+    "Resource endpoints for comprehensive data access",
+    "Status reporting and progress analysis"
+  ],
+  "security": {
+    "input_validation": true,
+    "sql_injection_protection": true,
+    "cors_enabled": true,
+    "helmet_security": true,
+    "parameterized_queries": true
+  },
+  "api": {
+    "base_url": "http://localhost:8355/api",
+    "transport": "stdio",
+    "protocol": "mcp-1.0"
+  },
+  "documentation": {
+    "readme": "README.txt",
+    "api_docs": "Available in repository",
+    "examples": "AI-AGENT-INTEGRATION-GUIDE.md"
+  }
+}

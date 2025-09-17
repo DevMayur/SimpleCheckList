@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "simple-checklist": {
+      "command": "node",
+      "args": ["/Users/mayurkakade/SimpleCheckList/mcp-server/index.js"],
+      "env": {
+        "API_BASE_URL": "http://localhost:8355/api"
+      }
+    }
+  }
+}

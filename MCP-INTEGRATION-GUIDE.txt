@@ -1,0 +1,253 @@
+SimpleCheckList MCP Server - Integration Guide
+===============================================
+
+🎯 OVERVIEW
+===========
+
+The SimpleCheckList MCP Server is a comprehensive Model Context Protocol implementation that provides AI applications with advanced task management capabilities. It follows the complete Anthropic MCP specification with Tools, Resources, and Prompts.
+
+🚀 FEATURES
+===========
+
+✅ Complete MCP Specification Compliance
+✅ 20+ Tools for full CRUD operations
+✅ 5 Resource types for real-time data access
+✅ 4 Intelligent prompt templates
+✅ Robust error handling with MCP error codes
+✅ Resource caching for performance
+✅ Comprehensive input validation
+✅ Security-focused design
+
+🔧 TOOLS (20+ Available)
+========================
+
+Project Management:
+- list_projects: Get all projects
+- create_project: Create new project
+- get_project: Get project details
+- update_project: Update project
+- delete_project: Delete project
+- get_project_stats: Get project statistics
+
+Group Management:
+- list_groups: Get groups for a project
+- create_group: Create new group
+
+Task List Management:
+- list_task_lists: Get task lists for a group
+- create_task_list: Create new task list
+
+Task Management:
+- list_tasks: Get tasks for a task list
+- create_task: Create new task
+- toggle_task_completion: Toggle task completion
+- update_task: Update task
+- delete_task: Delete task
+- get_all_tasks: Get all tasks with details
+
+Subtask Management:
+- list_subtasks: Get subtasks for a task
+- create_subtask: Create new subtask
+- toggle_subtask_completion: Toggle subtask completion
+- delete_subtask: Delete subtask
+
+📚 RESOURCES (5 Types)
+======================
+
+1. checklist://projects
+   - Complete list of all projects with metadata
+   - Includes project count and timestamp
+
+2. checklist://tasks/all
+   - All tasks across all projects with full details
+   - Includes completion statistics
+
+3. checklist://stats/summary
+   - System-wide statistics and metrics
+   - Project counts, task completion rates, priority distribution
+
+4. checklist://projects/{id}
+   - Detailed information about a specific project
+   - Includes project data and statistics
+
+5. checklist://projects/{id}/hierarchy
+   - Complete hierarchical structure of a project
+   - Full project tree with groups, task lists, tasks, and subtasks
+
+🎯 PROMPTS (4 Intelligent Templates)
+====================================
+
+1. create_project_plan
+   - Comprehensive project planning assistance
+   - Arguments: project_name, project_description, complexity
+   - Generates structured project plans based on complexity
+
+2. analyze_project_progress
+   - Progress analysis and insights
+   - Arguments: project_id
+   - Provides detailed progress assessment and recommendations
+
+3. suggest_task_breakdown
+   - Task decomposition suggestions
+   - Arguments: task_description, priority
+   - Breaks down complex tasks into manageable subtasks
+
+4. generate_status_report
+   - Professional status reporting
+   - Arguments: project_id (optional), include_details
+   - Creates comprehensive status reports
+
+🔌 INTEGRATION SETUP
+====================
+
+Prerequisites:
+1. SimpleCheckList backend server running on port 8355
+2. Node.js 18+ installed
+3. MCP-compatible AI application (Claude Desktop, etc.)
+
+Claude Desktop Integration:
+1. Copy the MCP configuration:
+   {
+     "mcpServers": {
+       "simple-checklist": {
+         "command": "node",
+         "args": ["/Users/mayurkakade/SimpleCheckList/mcp-server/index.js"],
+         "env": {
+           "API_BASE_URL": "http://localhost:8355/api"
+         }
+       }
+     }
+   }
+
+2. Add to your Claude Desktop configuration file:
+   - macOS: ~/Library/Application Support/Claude/claude_desktop_config.json
+   - Windows: %APPDATA%/Claude/claude_desktop_config.json
+
+3. Restart Claude Desktop
+
+Other MCP Clients:
+- Use stdio transport
+- Set command: node /path/to/mcp-server/index.js
+- Set environment variable: API_BASE_URL=http://localhost:8355/api
+
+🧪 TESTING
+==========
+
+Run comprehensive tests:
+```bash
+cd /Users/mayurkakade/SimpleCheckList
+node test-enhanced-mcp.js
+```
+
+Test specific features:
+```bash
+# Test basic functionality
+npm test
+
+# Test simple MCP server
+node test-mcp-server-simple.js
+```
+
+🛡️ SECURITY FEATURES
+====================
+
+- Input validation and sanitization
+- MCP error code compliance
+- Resource access control
+- Comprehensive error handling
+- Safe API request handling
+- No direct database access from MCP layer
+
+📊 PERFORMANCE FEATURES
+=======================
+
+- Resource caching
+- Efficient database queries
+- Optimized API calls
+- Minimal memory footprint
+- Fast JSON-RPC responses
+
+🔍 DEBUGGING
+============
+
+Enable debug logging:
+```bash
+DEBUG=* node mcp-server/index.js
+```
+
+Check server status:
+```bash
+curl http://localhost:8355/api/health
+```
+
+View server logs:
+- Check terminal output for MCP server messages
+- Backend server logs available in server console
+
+📝 EXAMPLE USAGE
+================
+
+Once connected to an AI application, you can:
+
+1. Create Projects:
+   "Create a new project called 'Website Redesign' for our company website overhaul"
+
+2. Analyze Progress:
+   "Analyze the progress of project ID abc123 and provide recommendations"
+
+3. Access Resources:
+   "Show me the current system statistics"
+   "Get the complete hierarchy for the Website Redesign project"
+
+4. Generate Reports:
+   "Generate a comprehensive status report for all projects"
+
+5. Plan Projects:
+   "Help me create a project plan for 'Mobile App Development' with moderate complexity"
+
+🎯 ADVANCED FEATURES
+====================
+
+Hierarchical Task Management:
+- Projects → Groups → Task Lists → Tasks → Subtasks
+- Complete CRUD operations at all levels
+- Flexible organization structure
+
+Intelligent Prompts:
+- Context-aware project planning
+- Progress analysis with insights
+- Task breakdown suggestions
+- Professional reporting
+
+Real-time Data Access:
+- Live project statistics
+- Current task status
+- System-wide metrics
+- Complete project hierarchies
+
+🔄 MAINTENANCE
+==============
+
+Regular Tasks:
+1. Monitor server logs for errors
+2. Check database integrity
+3. Update dependencies
+4. Test MCP connectivity
+5. Backup project data
+
+Troubleshooting:
+- Restart backend server if API calls fail
+- Check port availability (8355)
+- Verify MCP server configuration
+- Test with simple MCP client first
+
+📞 SUPPORT
+==========
+
+For issues:
+1. Check server logs
+2. Run test suite
+3. Verify configuration
+4. Test individual components
+
+The MCP server is production-ready and fully compliant with the Anthropic MCP specification!
