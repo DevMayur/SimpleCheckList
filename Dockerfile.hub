@@ -1,0 +1,84 @@
+# SimpleCheckList MCP Server - Docker Hub Distribution
+# Multi-stage build for optimized production image
+
+# Build stage
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+
+# Install system dependencies for building
+RUN apk add --no-cache python3 make g++ sqlite
+
+# Copy package files for dependency installation
+COPY package*.json ./
+COPY server/package*.json ./server/
+COPY mcp-server/package*.json ./mcp-server/
+
+# Install all dependencies
+RUN npm install
+RUN cd server && npm install --only=production
+RUN cd mcp-server && npm install --only=production
+
+# Copy source code
+COPY server ./server
+COPY mcp-server ./mcp-server
+COPY data ./data
+
+# Initialize database
+RUN mkdir -p /app/data
+RUN cd server && node scripts/init-db.js
+
+# Production stage
+FROM node:18-alpine AS production
+
+# Add labels for Docker Hub
+LABEL maintainer="SimpleCheckList Team"
+LABEL description="Advanced task and project management MCP server with hierarchical organization and AI-powered planning"
+LABEL version="1.0.0"
+LABEL org.opencontainers.image.source="https://github.com/DevMayur/SimpleCheckList"
+LABEL org.opencontainers.image.description="MCP server for comprehensive project management with AI assistance"
+LABEL org.opencontainers.image.licenses="MIT"
+
+WORKDIR /app
+
+# Install only runtime dependencies
+RUN apk add --no-cache sqlite curl
+
+# Create non-root user for security
+RUN addgroup -g 1001 -S mcpuser && \
+    adduser -S mcpuser -u 1001 -G mcpuser
+
+# Copy built application from builder stage
+COPY --from=builder --chown=mcpuser:mcpuser /app/server ./server
+COPY --from=builder --chown=mcpuser:mcpuser /app/mcp-server ./mcp-server
+COPY --from=builder --chown=mcpuser:mcpuser /app/data ./data
+
+# Create necessary directories with proper permissions
+RUN mkdir -p /app/data /app/logs && \
+    chown -R mcpuser:mcpuser /app
+
+# Switch to non-root user
+USER mcpuser
+
+# Expose ports
+EXPOSE 8355
+EXPOSE 3001
+
+# Environment variables
+ENV NODE_ENV=production
+ENV API_BASE_URL=http://localhost:8355/api
+ENV DATABASE_PATH=/app/data/checklist.db
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+  CMD curl -f http://localhost:8355/api/health || exit 1
+
+# Volume for persistent data
+VOLUME ["/app/data", "/app/logs"]
+
+# Start script
+COPY --chown=mcpuser:mcpuser docker-entrypoint.sh /app/
+RUN chmod +x /app/docker-entrypoint.sh
+
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
+CMD ["both"]

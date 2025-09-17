@@ -1,6 +1,7 @@
 # SimpleCheckList MCP Server
 
 [![MCP Registry Ready](https://img.shields.io/badge/MCP%20Registry-Ready-brightgreen)](https://github.com/modelcontextprotocol/registry)
+[![Docker Hub](https://img.shields.io/badge/Docker%20Hub-simplechecklist/mcp--server-blue)](https://hub.docker.com/r/simplechecklist/mcp-server)
 [![Security Audit](https://img.shields.io/badge/Security-Audit%20Passed-brightgreen)](./SECURITY-AUDIT.txt)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -46,16 +47,29 @@ Project
 ## 🔧 Installation
 
 ### Prerequisites
-- Node.js 18+
-- SQLite3
-- Docker (optional)
+- Node.js 18+ (for local installation)
+- Docker (for containerized deployment)
+- SQLite3 (for local installation)
 
-### Method 1: Quick Setup Script
+### Method 1: Docker Hub (Recommended) 🐳
+```bash
+# Pull and run from Docker Hub
+docker run -p 8355:8355 simplechecklist/mcp-server:latest
+
+# Or with persistent data
+docker run -d --name simplechecklist \
+    -p 8355:8355 \
+    -v simplechecklist_data:/app/data \
+    --restart unless-stopped \
+    simplechecklist/mcp-server:latest
+```
+
+### Method 2: Quick Setup Script
 ```bash
 ./setup.sh
 ```
 
-### Method 2: Manual Installation
+### Method 3: Manual Installation
 ```bash
 # Install dependencies
 npm install
@@ -70,7 +84,7 @@ cd server && npm run init-db
 cd .. && npm run dev
 ```
 
-### Method 3: Docker
+### Method 4: Docker Compose
 ```bash
 docker-compose up --build
 ```
@@ -78,8 +92,28 @@ docker-compose up --build
 ## 🤖 MCP Integration
 
 ### Claude Desktop Configuration
-Add to your Claude Desktop configuration:
 
+#### Option 1: Docker (Recommended)
+```json
+{
+  "mcpServers": {
+    "simple-checklist": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "-p", "8355:8355",
+        "simplechecklist/mcp-server:latest",
+        "mcp"
+      ],
+      "env": {
+        "API_BASE_URL": "http://localhost:8355/api"
+      }
+    }
+  }
+}
+```
+
+#### Option 2: Local Installation
 ```json
 {
   "mcpServers": {

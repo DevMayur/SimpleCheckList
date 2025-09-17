@@ -1,0 +1,58 @@
+# Node modules
+node_modules/
+*/node_modules/
+npm-debug.log*
+
+# Development files
+.git/
+.gitignore
+*.md
+!README.md
+.cursor/
+
+# Environment files
+.env*
+!.env.example
+
+# Build artifacts
+build/
+dist/
+coverage/
+
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Test files
+test/
+tests/
+*.test.js
+*.spec.js
+
+# Documentation (keep essential ones)
+publish-*.md
+GITHUB-SETUP-COMMANDS.txt
+SUBMISSION-INSTRUCTIONS.md
+ANTHROPIC-SUBMISSION-PACKAGE.md
+REGISTRY-SUBMISSION-SUMMARY.txt
+
+# Docker files (except the one being used)
+Dockerfile
+Dockerfile.mcp
+!Dockerfile.hub
+
+# Development scripts
+test-*.js
+setup.sh

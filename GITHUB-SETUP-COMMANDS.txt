@@ -1,0 +1,46 @@
+GitHub Repository Setup Commands
+=================================
+
+STEP 1: Create GitHub Repository
+--------------------------------
+1. Go to: https://github.com/new
+2. Repository name: SimpleCheckList
+3. Description: Advanced task and project management MCP server with hierarchical organization and AI-powered planning
+4. Make it PUBLIC (required for MCP registry submission)
+5. Do NOT initialize with README, .gitignore, or license (we already have these)
+6. Click "Create repository"
+
+STEP 2: Push Local Code to GitHub
+----------------------------------
+After creating the repository, run these commands:
+
+# Add the GitHub repository as remote origin
+git remote add origin https://github.com/mayurkakade/SimpleCheckList.git
+
+# Push the code to GitHub
+git branch -M main
+git push -u origin main
+
+STEP 3: Verify Repository Setup
+-------------------------------
+After pushing, verify:
+1. Repository is public and accessible
+2. All files are present including documentation
+3. README.md displays properly with badges
+4. Repository URL matches our configuration files
+
+STEP 4: Update Repository Settings (Optional)
+---------------------------------------------
+In GitHub repository settings:
+1. Enable Issues (for community support)
+2. Enable Discussions (for community engagement)
+3. Add topics: mcp-server, task-management, project-management, ai-integration
+4. Set up branch protection rules if desired
+
+Current Status:
+✅ Git repository initialized
+✅ All files committed locally
+✅ README.md created with comprehensive documentation
+✅ Configuration files updated with correct URLs
+
+Next: Create the GitHub repository and run the push commands above.

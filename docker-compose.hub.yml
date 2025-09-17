@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  simplechecklist-mcp:
+    image: simplechecklist/mcp-server:latest
+    container_name: simplechecklist-mcp
+    restart: unless-stopped
+    ports:
+      - "8355:8355"  # Backend API
+      - "3001:3001"  # MCP Server (if needed for TCP transport)
+    environment:
+      - NODE_ENV=production
+      - API_BASE_URL=http://localhost:8355/api
+      - DATABASE_PATH=/app/data/checklist.db
+    volumes:
+      - simplechecklist_data:/app/data
+      - simplechecklist_logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8355/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    networks:
+      - simplechecklist_network
+
+  # Optional: Frontend service (if needed)
+  # simplechecklist-frontend:
+  #   image: simplechecklist/frontend:latest
+  #   container_name: simplechecklist-frontend
+  #   restart: unless-stopped
+  #   ports:
+  #     - "8354:80"
+  #   depends_on:
+  #     - simplechecklist-mcp
+  #   environment:
+  #     - REACT_APP_API_URL=http://localhost:8355/api
+  #   networks:
+  #     - simplechecklist_network
+
+volumes:
+  simplechecklist_data:
+    driver: local
+  simplechecklist_logs:
+    driver: local
+
+networks:
+  simplechecklist_network:
+    driver: bridge
