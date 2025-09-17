@@ -1,11 +1,17 @@
+<div align="center">
+
+![SimpleCheckList Icon](./icon.png)
+
 # SimpleCheckList MCP Server
 
 [![MCP Registry Ready](https://img.shields.io/badge/MCP%20Registry-Ready-brightgreen)](https://github.com/modelcontextprotocol/registry)
-[![Docker Hub](https://img.shields.io/badge/Docker%20Hub-simplechecklist/mcp--server-blue)](https://hub.docker.com/r/simplechecklist/mcp-server)
+[![Docker Hub](https://img.shields.io/badge/Docker%20Hub-mayurkakade/mcp--server-blue)](https://hub.docker.com/r/mayurkakade/mcp-server)
 [![Security Audit](https://img.shields.io/badge/Security-Audit%20Passed-brightgreen)](./SECURITY-AUDIT.txt)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 > **Advanced task and project management MCP server with hierarchical organization, AI-powered planning, and comprehensive analytics**
+
+</div>
 
 ## 🚀 Quick Start
 

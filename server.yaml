@@ -1,0 +1,35 @@
+name: simple-checklist
+image: mayurkakade/mcp-server
+type: server
+meta:
+  category: productivity
+  tags:
+    - task-management
+    - project-management
+    - productivity
+    - hierarchical-organization
+    - ai-planning
+    - analytics
+    - claude-desktop
+    - mcp-server
+about:
+  title: SimpleCheckList MCP Server
+  description: Advanced task and project management MCP server with hierarchical organization, AI-powered planning, and comprehensive analytics. Features 20 tools, 5 resources, and 4 AI-powered prompts for complete project lifecycle management.
+  icon: https://raw.githubusercontent.com/DevMayur/SimpleCheckList/main/icon.png
+source:
+  project: https://github.com/DevMayur/SimpleCheckList
+config:
+  description: Configure the SimpleCheckList MCP Server connection
+  env:
+    - name: API_BASE_URL
+      example: http://localhost:8355/api
+      value: '{{simple-checklist.api_base_url}}'
+  parameters:
+    type: object
+    properties:
+      api_base_url:
+        type: string
+        default: "http://localhost:8355/api"
+        description: "Backend API URL for the SimpleCheckList server"
+    required:
+      - api_base_url
