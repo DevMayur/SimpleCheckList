@@ -1,0 +1,47 @@
+# Multi-stage build for SimpleCheckList with Frontend + Backend
+FROM node:18-alpine AS frontend-build
+
+# Build React frontend
+WORKDIR /app/client
+COPY client/package*.json ./
+RUN npm ci
+COPY client/ ./
+RUN npm run build
+
+# Production stage
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Install nginx and curl for health checks
+RUN apk add --no-cache nginx curl
+
+# Install backend dependencies
+COPY server/package*.json ./server/
+COPY mcp-server/package*.json ./mcp-server/
+RUN cd server && npm ci --only=production
+RUN cd mcp-server && npm ci --only=production
+
+# Copy backend code
+COPY server/ ./server/
+COPY mcp-server/ ./mcp-server/
+COPY data/ ./data/
+
+# Copy built frontend
+COPY --from=frontend-build /app/client/build ./client/build
+
+# Create nginx config
+RUN mkdir -p /etc/nginx/http.d
+COPY nginx.conf /etc/nginx/http.d/default.conf
+
+# Create startup script
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+  CMD curl -f http://localhost:8355/api/health || exit 1
+
+EXPOSE 80 8355
+
+CMD ["/app/start.sh"]

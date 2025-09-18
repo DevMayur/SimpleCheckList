@@ -48,10 +48,11 @@ SUBMISSION-INSTRUCTIONS.md
 ANTHROPIC-SUBMISSION-PACKAGE.md
 REGISTRY-SUBMISSION-SUMMARY.txt
 
-# Docker files (except the one being used)
+# Docker files (except the ones being used)
 Dockerfile
 Dockerfile.mcp
 !Dockerfile.hub
+!Dockerfile.fullstack
 
 # Development scripts
 test-*.js

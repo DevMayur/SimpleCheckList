@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  # Backend API Server
+  backend:
+    image: mayurkakade/mcp-server:latest
+    command: ["backend"]
+    ports:
+      - "8355:8355"
+    volumes:
+      - simplechecklist-data:/app/data
+    environment:
+      - NODE_ENV=production
+      - DATABASE_PATH=/app/data/checklist.db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8355/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - simplechecklist-network
+
+  # Frontend Web Server
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    environment:
+      - REACT_APP_API_URL=http://localhost:8355/api
+    networks:
+      - simplechecklist-network
+
+volumes:
+  simplechecklist-data:
+    driver: local
+
+networks:
+  simplechecklist-network:
+    driver: bridge

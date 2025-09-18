@@ -1,7 +1,7 @@
 {
   "name": "simple-checklist",
-  "version": "1.0.0",
-  "description": "Advanced task and project management MCP server with hierarchical organization, AI-powered planning prompts, and comprehensive analytics",
+  "version": "1.0.1",
+  "description": "Advanced task and project management MCP server with full-stack web UI, hierarchical organization, AI-powered planning prompts, and comprehensive analytics",
   "author": "SimpleCheckList Team",
   "license": "MIT",
   "repository": "https://github.com/DevMayur/SimpleCheckList",
@@ -38,7 +38,15 @@
   ],
   "installation": {
     "npm": "simple-checklist-mcp-server",
-    "docker": "simplechecklist/mcp-server",
+    "docker": {
+      "image": "mayurkakade/mcp-server",
+      "default_mode": "backend",
+      "modes": {
+        "backend": "HTTP API server (recommended for Docker)",
+        "mcp": "MCP server for direct client integration",
+        "both": "Both servers (MCP may exit in containerized environments)"
+      }
+    },
     "local": {
       "command": "node",
       "args": ["mcp-server/index.js"],
@@ -56,14 +64,17 @@
     }
   },
   "features": [
+    "Full-stack web UI with React-based project management interface (NEW in v1.0.1)",
     "Hierarchical project organization (Projects → Groups → Task Lists → Tasks → Subtasks)",
     "Complete CRUD operations for all entity types",
     "AI-powered project planning prompts",
     "Real-time analytics and progress tracking",
+    "Visual dashboard with progress indicators and charts",
     "Priority management and due date tracking",
     "Rich metadata support for tasks",
     "Resource endpoints for comprehensive data access",
-    "Status reporting and progress analysis"
+    "Status reporting and progress analysis",
+    "Multi-deployment options (Web UI + API, API-only, local, Docker)"
   ],
   "security": {
     "input_validation": true,

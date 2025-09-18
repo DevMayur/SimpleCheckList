@@ -1,0 +1,122 @@
+SimpleCheckList MCP Server - Global Usage Guide
+===============================================
+
+Your SimpleCheckList MCP Server is ALREADY GLOBALLY AVAILABLE!
+You can use it on any PC worldwide right now.
+
+QUICK START ON ANY PC
+=====================
+
+1. Install Docker (if not already installed)
+   - Windows: Download Docker Desktop from docker.com
+   - Mac: Download Docker Desktop from docker.com  
+   - Linux: Install docker via package manager
+
+2. Pull and run your MCP server (ONE COMMAND):
+   docker run -p 8355:8355 mayurkakade/mcp-server:latest
+
+3. Access the API:
+   http://localhost:8355/api/health
+
+CLAUDE DESKTOP INTEGRATION (ANY PC)
+===================================
+
+Add this to Claude Desktop configuration on any computer:
+
+{
+  "mcpServers": {
+    "simple-checklist": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i", 
+        "-p", "8355:8355", 
+        "mayurkakade/mcp-server:latest", 
+        "mcp"
+      ],
+      "env": {
+        "API_BASE_URL": "http://localhost:8355/api"
+      }
+    }
+  }
+}
+
+PRODUCTION DEPLOYMENT (ANY PC)
+==============================
+
+For persistent data on any PC:
+
+docker run -d --name simplechecklist \
+    -p 8355:8355 \
+    -v simplechecklist_data:/app/data \
+    --restart unless-stopped \
+    mayurkakade/mcp-server:latest
+
+GLOBAL AVAILABILITY STATUS
+==========================
+
+✅ Docker Hub: https://hub.docker.com/r/mayurkakade/mcp-server
+✅ Global CDN: Available worldwide with fast downloads
+✅ All Platforms: Works on Windows, Mac, Linux
+✅ No Dependencies: Everything included in container
+✅ Production Ready: 179MB optimized image
+
+USAGE EXAMPLES ON ANY PC
+========================
+
+# Basic health check
+curl http://localhost:8355/api/health
+
+# Create a project
+curl -X POST http://localhost:8355/api/projects \
+  -H "Content-Type: application/json" \
+  -d '{"name":"My Project","description":"Testing on new PC"}'
+
+# List projects  
+curl http://localhost:8355/api/projects
+
+DIFFERENT STARTUP MODES
+=======================
+
+# Backend API only
+docker run -p 8355:8355 mayurkakade/mcp-server:latest backend
+
+# MCP server only (for Claude Desktop)
+docker run --rm -i mayurkakade/mcp-server:latest mcp
+
+# Both services (default)
+docker run -p 8355:8355 mayurkakade/mcp-server:latest both
+
+SHARING WITH OTHERS
+===================
+
+Anyone can now install your MCP server with:
+docker pull mayurkakade/mcp-server:latest
+
+Share this command with:
+- Colleagues for team project management
+- Friends trying Claude Desktop MCP integration
+- Community members interested in task management
+- Anyone wanting AI-powered project organization
+
+GLOBAL DISTRIBUTION CHANNELS
+============================
+
+Your MCP server is available through:
+✅ Docker Hub: mayurkakade/mcp-server
+✅ GitHub: https://github.com/DevMayur/SimpleCheckList
+✅ Docker MCP Registry: Under review (will be mcp/simplechecklist)
+✅ Anthropic MCP Registry: Ready for submission
+
+STATUS: GLOBALLY AVAILABLE NOW
+==============================
+
+You don't need to wait for registry approval!
+Your MCP server is already serving users worldwide through Docker Hub.
+
+The registry reviews are for:
+- Official endorsement and enhanced discoverability
+- Integration with Docker Desktop MCP Toolkit
+- Enhanced security features and signatures
+- Broader community reach
+
+But the functionality is 100% available globally right now!

@@ -1,0 +1,250 @@
+SimpleCheckList MCP Server - Docker Usage Instructions
+===========================================================
+
+🚀 QUICK START - Updated with Docker Fix (v1.0.1)
+==================================================
+
+The SimpleCheckList MCP Server now runs stable in Docker with improved mode handling.
+Default mode is now 'backend' for reliable containerized deployment.
+
+📋 BASIC USAGE
+==============
+
+1. RECOMMENDED: Default Backend Mode (Stable)
+   docker run -p 8355:8355 mayurkakade/mcp-server:latest
+
+2. Explicit Backend Mode
+   docker run -p 8355:8355 mayurkakade/mcp-server:latest backend
+
+3. MCP Server Mode (for direct client integration)
+   docker run mayurkakade/mcp-server:latest mcp
+
+4. Both Modes (not recommended for Docker)
+   docker run -p 8355:8355 mayurkakade/mcp-server:latest both
+
+🔧 SERVER MODES EXPLAINED
+=========================
+
+BACKEND MODE (Recommended for Docker):
+- Runs HTTP API server on port 8355
+- Stable and persistent in containerized environments
+- Perfect for web applications and HTTP clients
+- Health check: http://localhost:8355/api/health
+- API endpoints: http://localhost:8355/api/*
+
+MCP MODE (For Direct Client Integration):
+- Runs MCP server on stdio (standard input/output)
+- Designed for direct MCP client communication
+- Best used outside of Docker containers
+- Required for Claude Desktop integration
+
+BOTH MODE (Advanced Use):
+- Attempts to run both HTTP and MCP servers
+- MCP server may exit in Docker due to stdio limitations
+- Only use if you need both simultaneously
+
+🌟 WHAT'S NEW IN v1.0.1
+=======================
+
+✅ Fixed: Docker container no longer exits immediately
+✅ Changed: Default mode from 'both' to 'backend' for stability
+✅ Added: Clear messaging about different server modes
+✅ Improved: Better user experience with informative startup messages
+
+📖 DETAILED USAGE EXAMPLES
+===========================
+
+1. BASIC WEB API USAGE:
+   # Start the server
+   docker run -d -p 8355:8355 --name simplechecklist mayurkakade/mcp-server:latest
+   
+   # Test the API
+   curl http://localhost:8355/api/health
+   curl http://localhost:8355/api/projects
+   
+   # Stop the server
+   docker stop simplechecklist
+   docker rm simplechecklist
+
+2. PERSISTENT DATA STORAGE:
+   # Create a volume for data persistence
+   docker volume create simplechecklist-data
+   
+   # Run with persistent storage
+   docker run -d -p 8355:8355 \
+     -v simplechecklist-data:/app/data \
+     --name simplechecklist \
+     mayurkakade/mcp-server:latest
+
+3. CUSTOM CONFIGURATION:
+   # Run with custom environment variables
+   docker run -d -p 8355:8355 \
+     -e NODE_ENV=production \
+     -e DATABASE_PATH=/app/data/custom.db \
+     --name simplechecklist \
+     mayurkakade/mcp-server:latest
+
+4. DOCKER COMPOSE SETUP:
+   # Use the included docker-compose.yml
+   docker-compose up -d
+   
+   # View logs
+   docker-compose logs -f
+   
+   # Stop services
+   docker-compose down
+
+🔍 TROUBLESHOOTING
+==================
+
+PROBLEM: Container exits immediately
+SOLUTION: Update to latest image and use backend mode:
+  docker pull mayurkakade/mcp-server:latest
+  docker run -p 8355:8355 mayurkakade/mcp-server:latest backend
+
+PROBLEM: "Mode: both" shown in logs (old image)
+SOLUTION: Force pull the latest image:
+  docker system prune -a
+  docker pull mayurkakade/mcp-server:latest
+
+PROBLEM: API not accessible
+SOLUTION: Check port mapping and container status:
+  docker ps
+  docker logs <container-id>
+  curl http://localhost:8355/api/health
+
+PROBLEM: MCP server exits in Docker
+SOLUTION: This is expected behavior - use backend mode for Docker:
+  docker run -p 8355:8355 mayurkakade/mcp-server:latest backend
+
+📊 HEALTH CHECKS
+================
+
+The server includes built-in health monitoring:
+
+HTTP Health Check:
+  curl http://localhost:8355/api/health
+  Expected: {"status":"OK","timestamp":"..."}
+
+Docker Health Check:
+  docker inspect <container-id> | grep Health -A 10
+
+Container Status:
+  docker ps --filter "ancestor=mayurkakade/mcp-server:latest"
+
+🚀 DEPLOYMENT OPTIONS
+=====================
+
+1. DEVELOPMENT:
+   docker run -p 8355:8355 mayurkakade/mcp-server:latest
+
+2. PRODUCTION:
+   docker run -d --restart=unless-stopped \
+     -p 8355:8355 \
+     -v simplechecklist-data:/app/data \
+     --name simplechecklist-prod \
+     mayurkakade/mcp-server:latest
+
+3. BEHIND REVERSE PROXY:
+   docker run -d -p 127.0.0.1:8355:8355 \
+     --name simplechecklist \
+     mayurkakade/mcp-server:latest
+
+4. WITH CUSTOM NETWORK:
+   docker network create simplechecklist-net
+   docker run -d --network simplechecklist-net \
+     -p 8355:8355 \
+     --name simplechecklist \
+     mayurkakade/mcp-server:latest
+
+🔗 API ENDPOINTS
+================
+
+Once running in backend mode, these endpoints are available:
+
+Health & Status:
+  GET  /api/health              - Server health check
+  
+Projects:
+  GET  /api/projects            - List all projects
+  POST /api/projects            - Create new project
+  GET  /api/projects/{id}       - Get specific project
+  PUT  /api/projects/{id}       - Update project
+  DELETE /api/projects/{id}     - Delete project
+  GET  /api/projects/{id}/stats - Project statistics
+
+Groups:
+  GET  /api/projects/{id}/groups     - List project groups
+  POST /api/projects/{id}/groups     - Create new group
+
+Task Lists:
+  GET  /api/groups/{id}/task-lists   - List group task lists
+  POST /api/groups/{id}/task-lists   - Create new task list
+
+Tasks:
+  GET  /api/task-lists/{id}/tasks    - List tasks
+  POST /api/task-lists/{id}/tasks    - Create new task
+  PUT  /api/tasks/{id}               - Update task
+  DELETE /api/tasks/{id}             - Delete task
+  PATCH /api/tasks/{id}/toggle       - Toggle completion
+
+Subtasks:
+  GET  /api/tasks/{id}/subtasks      - List subtasks
+  POST /api/tasks/{id}/subtasks      - Create subtask
+  DELETE /api/subtasks/{id}          - Delete subtask
+  PATCH /api/subtasks/{id}/toggle    - Toggle completion
+
+Analytics:
+  GET  /api/tasks/all                - All tasks across projects
+
+📝 INTEGRATION EXAMPLES
+=======================
+
+JavaScript/Node.js:
+  const response = await fetch('http://localhost:8355/api/projects');
+  const projects = await response.json();
+
+Python:
+  import requests
+  response = requests.get('http://localhost:8355/api/projects')
+  projects = response.json()
+
+curl:
+  # Create a project
+  curl -X POST http://localhost:8355/api/projects \
+    -H "Content-Type: application/json" \
+    -d '{"name":"My Project","description":"Test project"}'
+
+🆘 GETTING HELP
+===============
+
+- GitHub Issues: https://github.com/DevMayur/SimpleCheckList/issues
+- Documentation: See README.txt and MCP-SERVER-README.txt
+- Docker Hub: https://hub.docker.com/r/mayurkakade/mcp-server
+- MCP Integration: See AI-AGENT-INTEGRATION-GUIDE.md
+
+📅 VERSION HISTORY
+==================
+
+v1.0.1 (Current):
+- Fixed Docker container exit issue
+- Changed default mode to 'backend' for stability
+- Added clear mode documentation
+- Improved startup messaging
+
+v1.0.0:
+- Initial release
+- Full MCP protocol implementation
+- 20 tools, 5 resources, 4 prompts
+- Docker support with multi-stage build
+
+🎯 NEXT STEPS
+=============
+
+1. Start the server: docker run -p 8355:8355 mayurkakade/mcp-server:latest
+2. Test the API: curl http://localhost:8355/api/health
+3. Create your first project via API or integrate with MCP clients
+4. Explore the comprehensive project management features
+5. Check out the AI-powered planning prompts for advanced usage
+
+Happy project managing! 🚀

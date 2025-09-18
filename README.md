@@ -15,10 +15,21 @@
 
 ## 🚀 Quick Start
 
-### For Everyone (Docker - Recommended):
+### 🌐 Full-Stack Web Application (NEW in v1.0.1):
 ```bash
-# One command to run globally available MCP server
-docker run -p 8355:8355 simplechecklist/mcp-server:latest
+# Complete project management application with web UI + API
+docker run -d -p 8080:80 -p 8355:8355 mayurkakade/mcp-server:v1.0.1
+
+# Access:
+# - Web UI: http://localhost:8080 (Complete project management interface)
+# - API: http://localhost:8355/api (MCP server endpoints)
+# - Health: http://localhost:8355/api/health
+```
+
+### 📡 API-Only Mode (Original):
+```bash
+# Backend API server only (for MCP integration)
+docker run -p 8355:8355 mayurkakade/mcp-server:latest backend
 
 # Access the API at http://localhost:8355/api/health
 # MCP server ready for Claude Desktop integration!
@@ -43,12 +54,13 @@ SimpleCheckList is a comprehensive Model Context Protocol (MCP) server that prov
 
 ### 🎯 Key Features
 
-- **Hierarchical Organization**: Projects → Groups → Task Lists → Tasks → Subtasks
-- **20 Comprehensive Tools**: Complete CRUD operations for all entity types
-- **5 Resource Endpoints**: Real-time data access and analytics
-- **4 AI-Powered Prompts**: Intelligent planning and analysis assistance
-- **Enterprise Security**: Comprehensive security audit passed
-- **Multi-Deployment**: Local, Docker, and cloud deployment options
+- **🌐 Full-Stack Web UI**: Complete React-based project management interface (NEW in v1.0.1)
+- **🔧 Hierarchical Organization**: Projects → Groups → Task Lists → Tasks → Subtasks
+- **🛠️ 20 Comprehensive Tools**: Complete CRUD operations for all entity types
+- **📊 5 Resource Endpoints**: Real-time data access and analytics
+- **🤖 4 AI-Powered Prompts**: Intelligent planning and analysis assistance
+- **🔒 Enterprise Security**: Comprehensive security audit passed
+- **🚀 Multi-Deployment**: Web UI, API-only, local, Docker, and cloud options
 
 ## 🏗️ Architecture
 
@@ -68,16 +80,40 @@ Project
 - SQLite3 (for local installation)
 
 ### Method 1: Docker Hub (Recommended) 🐳
-```bash
-# Pull and run from Docker Hub
-docker run -p 8355:8355 simplechecklist/mcp-server:latest
 
-# Or with persistent data
-docker run -d --name simplechecklist \
+#### Full-Stack Web Application (v1.0.1+):
+```bash
+# Complete application with web UI + API
+docker run -d --name simplechecklist-fullstack \
+    -p 8080:80 \
     -p 8355:8355 \
     -v simplechecklist_data:/app/data \
     --restart unless-stopped \
-    simplechecklist/mcp-server:latest
+    mayurkakade/mcp-server:v1.0.1
+
+# Access:
+# - Web UI: http://localhost:8080
+# - API: http://localhost:8355/api
+```
+
+#### API-Only Mode:
+```bash
+# Backend API server only (for MCP integration)
+docker run -d --name simplechecklist-api \
+    -p 8355:8355 \
+    -v simplechecklist_data:/app/data \
+    --restart unless-stopped \
+    mayurkakade/mcp-server:latest backend
+```
+
+#### Docker Compose (Production):
+```bash
+# Use the full-stack compose file
+docker-compose -f docker-compose.fullstack.yml up -d
+
+# Access:
+# - Web UI: http://localhost:8080
+# - API: http://localhost:8355/api
 ```
 
 ### Method 2: Quick Setup Script
@@ -181,9 +217,43 @@ docker-compose up --build
 - `suggest_task_breakdown` - Smart task decomposition
 - `generate_status_report` - Comprehensive reporting
 
+## 🌐 Web UI Features (v1.0.1+)
+
+The full-stack deployment includes a complete React-based web interface:
+
+### 📋 Project Management Dashboard
+- **Visual Project Overview**: See all projects with progress indicators
+- **Hierarchical Task Organization**: Drill down from projects to subtasks
+- **Real-time Updates**: Live progress tracking and completion status
+- **Responsive Design**: Works on desktop, tablet, and mobile devices
+
+### 🎯 Task Management Interface
+- **Drag & Drop**: Intuitive task organization and prioritization
+- **Rich Task Details**: Add descriptions, due dates, priorities, and metadata
+- **Progress Tracking**: Visual completion indicators and statistics
+- **Search & Filter**: Find tasks quickly across projects
+
+### 📊 Analytics & Reporting
+- **Project Statistics**: Completion rates, task distribution, progress charts
+- **Time Tracking**: Due date management and deadline monitoring
+- **Export Capabilities**: Generate reports and export data
+
+### 🔧 Admin Features
+- **User Management**: Multi-user support with role-based access
+- **Settings Panel**: Configure preferences and system settings
+- **Data Import/Export**: Backup and restore project data
+
 ## 📖 Usage Examples
 
-### Creating a Web Application Project
+### Web UI Usage
+1. **Start the application**: `docker run -d -p 8080:80 -p 8355:8355 mayurkakade/mcp-server:v1.0.1`
+2. **Open your browser**: Navigate to `http://localhost:8080`
+3. **Create your first project**: Click "New Project" and follow the wizard
+4. **Organize with groups**: Add Frontend, Backend, Testing groups
+5. **Add task lists**: Create specific feature lists within groups
+6. **Track progress**: Mark tasks complete and watch progress indicators update
+
+### API Usage - Creating a Web Application Project
 
 ```javascript
 // 1. Create project
