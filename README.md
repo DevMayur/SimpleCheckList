@@ -15,16 +15,18 @@
 
 ## 🚀 Quick Start
 
-### 🌐 Full-Stack Web Application (NEW in v1.0.1):
+### 🌐 Full-Stack Web Application (FIXED in v1.0.2):
 ```bash
 # Complete project management application with web UI + API
-docker run -d -p 8080:80 -p 8355:8355 mayurkakade/mcp-server:v1.0.1
+docker run -d -p 8080:80 -p 8355:8355 mayurkakade/mcp-server:latest
 
 # Access:
 # - Web UI: http://localhost:8080 (Complete project management interface)
 # - API: http://localhost:8355/api (MCP server endpoints)
 # - Health: http://localhost:8355/api/health
 ```
+
+> **Note**: Use `mayurkakade/mcp-server:v1.0.2` for the specific fixed version with frontend startup issues resolved.
 
 ### 📡 API-Only Mode (Original):
 ```bash
@@ -52,9 +54,24 @@ npm run dev
 
 SimpleCheckList is a comprehensive Model Context Protocol (MCP) server that provides AI applications with powerful project management capabilities. It features a hierarchical organization system, AI-powered planning assistance, and real-time analytics.
 
+## 🔧 Recent Updates (v1.0.2)
+
+**✅ Docker Frontend Issues FIXED**: The latest version resolves all Docker container startup problems:
+
+- **Frontend Startup Fixed**: React app now serves properly on port 80
+- **Backend API Fixed**: Server starts correctly and responds on port 8355
+- **Nginx Configuration**: Resolved redirect loops and file serving issues
+- **Both Services Working**: Complete full-stack deployment now functional
+
+**Migration**: If you had issues with v1.0.1, simply pull the latest image:
+```bash
+docker pull mayurkakade/mcp-server:latest
+```
+
 ### 🎯 Key Features
 
-- **🌐 Full-Stack Web UI**: Complete React-based project management interface (NEW in v1.0.1)
+- **🌐 Full-Stack Web UI**: Complete React-based project management interface (FIXED in v1.0.2)
+- **✅ Docker Frontend Fixed**: Resolved startup issues, both frontend and backend work seamlessly
 - **🔧 Hierarchical Organization**: Projects → Groups → Task Lists → Tasks → Subtasks
 - **🛠️ 20 Comprehensive Tools**: Complete CRUD operations for all entity types
 - **📊 5 Resource Endpoints**: Real-time data access and analytics
@@ -81,19 +98,22 @@ Project
 
 ### Method 1: Docker Hub (Recommended) 🐳
 
-#### Full-Stack Web Application (v1.0.1+):
+#### Full-Stack Web Application (v1.0.2 - RECOMMENDED):
 ```bash
-# Complete application with web UI + API
+# Complete application with web UI + API - FIXED VERSION
 docker run -d --name simplechecklist-fullstack \
     -p 8080:80 \
     -p 8355:8355 \
     -v simplechecklist_data:/app/data \
     --restart unless-stopped \
-    mayurkakade/mcp-server:v1.0.1
+    mayurkakade/mcp-server:latest
 
 # Access:
 # - Web UI: http://localhost:8080
 # - API: http://localhost:8355/api
+
+# For specific version:
+# mayurkakade/mcp-server:v1.0.2  (recommended - has frontend fixes)
 ```
 
 #### API-Only Mode:
@@ -217,9 +237,9 @@ docker-compose up --build
 - `suggest_task_breakdown` - Smart task decomposition
 - `generate_status_report` - Comprehensive reporting
 
-## 🌐 Web UI Features (v1.0.1+)
+## 🌐 Web UI Features (v1.0.2+ - WORKING)
 
-The full-stack deployment includes a complete React-based web interface:
+The full-stack deployment includes a complete React-based web interface with all startup issues fixed:
 
 ### 📋 Project Management Dashboard
 - **Visual Project Overview**: See all projects with progress indicators
@@ -246,12 +266,14 @@ The full-stack deployment includes a complete React-based web interface:
 ## 📖 Usage Examples
 
 ### Web UI Usage
-1. **Start the application**: `docker run -d -p 8080:80 -p 8355:8355 mayurkakade/mcp-server:v1.0.1`
+1. **Start the application**: `docker run -d -p 8080:80 -p 8355:8355 mayurkakade/mcp-server:latest`
 2. **Open your browser**: Navigate to `http://localhost:8080`
 3. **Create your first project**: Click "New Project" and follow the wizard
 4. **Organize with groups**: Add Frontend, Backend, Testing groups
 5. **Add task lists**: Create specific feature lists within groups
 6. **Track progress**: Mark tasks complete and watch progress indicators update
+
+> **Note**: v1.0.2 has all Docker frontend startup issues resolved - both UI and API work seamlessly!
 
 ### API Usage - Creating a Web Application Project
 
