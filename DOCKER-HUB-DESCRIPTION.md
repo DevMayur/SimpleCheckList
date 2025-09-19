@@ -1,6 +1,6 @@
 # SimpleCheckList MCP Server - Full-Stack Project Management
 
-**🌟 NEW in v1.0.1: Complete Web UI + API Server**
+**🌟 FIXED in v1.0.2: Complete Web UI + API Server (Frontend Startup Fixed)**
 
 Advanced Model Context Protocol (MCP) server with hierarchical project management, AI-powered planning, and comprehensive analytics. Now includes a full-stack React-based web interface!
 
@@ -8,8 +8,9 @@ Advanced Model Context Protocol (MCP) server with hierarchical project managemen
 
 ### Full-Stack Web Application (Recommended)
 ```bash
-docker run -d -p 8080:80 -p 8355:8355 mayurkakade/mcp-server:v1.0.1
+docker run -d -p 8080:80 -p 8355:8355 mayurkakade/mcp-server:latest
 ```
+**Note**: Use `v1.0.2` for the latest stable version with frontend fixes.
 - **Web UI**: http://localhost:8080 (Complete project management interface)
 - **API**: http://localhost:8355/api (MCP server endpoints)
 
@@ -28,13 +29,16 @@ docker run -p 8355:8355 mayurkakade/mcp-server:latest backend
 - **🔒 Enterprise Security**: Comprehensive security audit passed
 - **🐳 Production Ready**: Health checks, persistent data, auto-restart
 
-## 📋 What's New in v1.0.1
+## 📋 What's Fixed in v1.0.2
 
-- **Complete Web Interface**: Modern React-based UI with Material Design
-- **Visual Project Dashboard**: Progress indicators, charts, and analytics
-- **Responsive Design**: Works on desktop, tablet, and mobile
-- **Multi-deployment Options**: Web UI + API or API-only modes
-- **Enhanced Docker Support**: Optimized containers with health checks
+- **✅ Frontend Startup Fixed**: Resolved Docker container frontend not starting
+- **✅ Backend API Fixed**: Corrected server startup path and configuration
+- **✅ Nginx Configuration**: Fixed redirect loops and file serving
+- **✅ Complete Web Interface**: Modern React-based UI with Material Design
+- **✅ Visual Project Dashboard**: Progress indicators, charts, and analytics
+- **✅ Responsive Design**: Works on desktop, tablet, and mobile
+- **✅ Multi-deployment Options**: Web UI + API or API-only modes
+- **✅ Enhanced Docker Support**: Optimized containers with health checks
 
 ## 🎯 Use Cases
 
@@ -51,7 +55,7 @@ docker run -d --name simplechecklist \
   -p 8080:80 -p 8355:8355 \
   -v simplechecklist_data:/app/data \
   --restart unless-stopped \
-  mayurkakade/mcp-server:v1.0.1
+  mayurkakade/mcp-server:v1.0.2
 ```
 
 ### Claude Desktop Integration
@@ -76,8 +80,9 @@ Add to your `claude_desktop_config.json`:
 
 ## 🏷️ Tags
 
-- `latest` - Full-stack application (Web UI + API)
-- `v1.0.1` - Full-stack with web interface
+- `latest` - Full-stack application (Web UI + API) - **FIXED VERSION**
+- `v1.0.2` - Full-stack with web interface - **RECOMMENDED** (frontend fixes)
+- `v1.0.1` - Full-stack with web interface (has frontend startup issues)
 - `v1.0.0` - Original API-only version
 
 **Ready for AI-powered project management? Get started today!**
