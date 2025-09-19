@@ -18,8 +18,8 @@ nginx
 
 # Start backend server
 echo "🔧 Starting Backend API server (port 8355)..."
-cd /app/mcp-server
-node index.js backend &
+cd /app/server
+node index.js &
 BACKEND_PID=$!
 
 # Wait for backend to start

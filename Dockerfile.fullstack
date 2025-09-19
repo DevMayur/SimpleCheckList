@@ -34,6 +34,9 @@ COPY --from=frontend-build /app/client/build ./client/build
 RUN mkdir -p /etc/nginx/http.d
 COPY nginx.conf /etc/nginx/http.d/default.conf
 
+# Ensure nginx can access the frontend files
+RUN chmod -R 755 /app/client/build
+
 # Create startup script
 COPY start.sh /app/start.sh
 RUN chmod +x /app/start.sh
