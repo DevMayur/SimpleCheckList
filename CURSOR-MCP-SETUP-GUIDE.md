@@ -39,10 +39,12 @@ npm start
 4. **Configure the Server**
    - **Server Name**: `simple-checklist`
    - **Command**: `node`
-   - **Arguments**: `/Users/mayurkakade/SimpleCheckList/mcp-server/index.js`
+   - **Arguments**: `/Users/mayurkakade/SimpleCheckList/mcp-server/index.js` *(use your actual path)*
    - **Environment Variables**:
      - Key: `API_BASE_URL`
      - Value: `http://localhost:8355/api`
+
+   > **Important**: Replace `/Users/mayurkakade/SimpleCheckList/mcp-server/index.js` with the actual path to your SimpleCheckList installation.
 
 ### Step 3: Save and Test
 
@@ -67,7 +69,7 @@ npm start
 }
 ```
 
-### Docker Configuration
+### Docker Configuration (Alternative - Not Recommended for Cursor)
 ```json
 {
   "mcpServers": {
@@ -86,6 +88,8 @@ npm start
   }
 }
 ```
+
+> **Note**: Docker configuration may have issues with Cursor. Use local Node.js configuration for best results.
 
 ## 🔧 Troubleshooting
 
