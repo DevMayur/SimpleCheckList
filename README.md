@@ -163,6 +163,19 @@ docker-compose up --build
 
 ## 🤖 MCP Integration
 
+### Cursor IDE Configuration
+
+**New!** Complete setup guide for Cursor IDE users:
+
+**👉 [Cursor MCP Setup Guide](./CURSOR-MCP-SETUP-GUIDE.md)** - Step-by-step instructions
+
+**Quick Setup**: 
+1. Go to Cursor Settings → MCP → New MCP Server
+2. Name: `simple-checklist`
+3. Command: `node`
+4. Args: `/path/to/SimpleCheckList/mcp-server/index.js`
+5. Env: `API_BASE_URL=http://localhost:8355/api`
+
 ### Claude Desktop Configuration
 
 #### Option 1: Docker (Recommended)
@@ -373,6 +386,7 @@ DATABASE_PATH=./data/checklist.db
 
 ## 📚 Documentation
 
+- **[Cursor MCP Setup Guide](./CURSOR-MCP-SETUP-GUIDE.md)** - Complete Cursor IDE integration guide
 - **[MCP Server Documentation](./MCP-SERVER-README.txt)** - Complete MCP integration guide
 - **[AI Agent Integration](./AI-AGENT-INTEGRATION-GUIDE.md)** - AI application examples
 - **[Security Audit](./SECURITY-AUDIT.txt)** - Comprehensive security analysis

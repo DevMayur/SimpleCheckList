@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="SimpleCheckList MCP Server - Help & Setup Guide" />
+    <title>Help - SimpleCheckList MCP Server</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #2563eb; border-bottom: 3px solid #2563eb; padding-bottom: 10px; }
+        h2 { color: #1e40af; margin-top: 30px; }
+        h3 { color: #3b82f6; }
+        .highlight { background-color: #eff6ff; padding: 15px; border-left: 4px solid #2563eb; margin: 15px 0; }
+        .step { background-color: #f0f9ff; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .code { background-color: #1e293b; color: #e2e8f0; padding: 15px; border-radius: 5px; font-family: monospace; overflow-x: auto; }
+        .button { display: inline-block; background-color: #2563eb; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin: 10px 5px; }
+        .button:hover { background-color: #1d4ed8; }
+        ul li { margin: 5px 0; }
+        .icon { width: 64px; height: 64px; margin: 0 auto 20px; display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="text-align: center;">
+            <img src="/favicon.ico" alt="SimpleCheckList" class="icon" />
+            <h1>SimpleCheckList MCP Server</h1>
+            <p><strong>Complete Help & Setup Guide</strong></p>
+        </div>
+
+        <div class="highlight">
+            <strong>🎉 Welcome to SimpleCheckList!</strong> This guide will help you set up the MCP server with various AI tools and IDEs.
+        </div>
+
+        <h2>🚀 Quick Access</h2>
+        <ul>
+            <li><strong>Web UI</strong>: <a href="/">http://localhost:8080</a> (Project management interface)</li>
+            <li><strong>API</strong>: <a href="http://localhost:8355/api/health">http://localhost:8355/api</a> (MCP server endpoints)</li>
+            <li><strong>Health Check</strong>: <a href="http://localhost:8355/api/health">http://localhost:8355/api/health</a></li>
+        </ul>
+
+        <h2>🔧 Cursor IDE Setup</h2>
+        
+        <div class="highlight">
+            <strong>New!</strong> SimpleCheckList now supports Cursor IDE with full MCP integration.
+        </div>
+
+        <h3>Step-by-Step Setup:</h3>
+        
+        <div class="step">
+            <strong>Step 1:</strong> Open Cursor Settings
+            <ul>
+                <li>Press <code>Cmd/Ctrl + ,</code> or go to <strong>Cursor → Settings</strong></li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <strong>Step 2:</strong> Navigate to MCP Settings
+            <ul>
+                <li>Click on <strong>"MCP"</strong> in the left sidebar</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <strong>Step 3:</strong> Add New MCP Server
+            <ul>
+                <li>Click <strong>"New MCP Server"</strong> button</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <strong>Step 4:</strong> Configure the Server
+            <ul>
+                <li><strong>Server Name:</strong> <code>simple-checklist</code></li>
+                <li><strong>Command:</strong> <code>node</code></li>
+                <li><strong>Arguments:</strong> <code>/path/to/SimpleCheckList/mcp-server/index.js</code></li>
+                <li><strong>Environment Variables:</strong>
+                    <ul>
+                        <li>Key: <code>API_BASE_URL</code></li>
+                        <li>Value: <code>http://localhost:8355/api</code></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <strong>Step 5:</strong> Save and Test
+            <ul>
+                <li>Click <strong>"Save"</strong> to add the server</li>
+                <li>Restart Cursor to activate the MCP server</li>
+                <li>Test by asking: <em>"Create a new project called 'Test Project'"</em></li>
+            </ul>
+        </div>
+
+        <h2>🤖 Claude Desktop Setup</h2>
+        
+        <p>Add this to your <code>claude_desktop_config.json</code>:</p>
+        
+        <div class="code">
+{
+  "mcpServers": {
+    "simple-checklist": {
+      "command": "node",
+      "args": ["/path/to/SimpleCheckList/mcp-server/index.js"],
+      "env": {
+        "API_BASE_URL": "http://localhost:8355/api"
+      }
+    }
+  }
+}
+        </div>
+
+        <h2>🎯 Available Commands</h2>
+        
+        <p>Once configured, you can use these commands in your AI tools:</p>
+        
+        <h3>Project Management</h3>
+        <ul>
+            <li><em>"Create a new project for building a React app"</em></li>
+            <li><em>"List all my current projects"</em></li>
+            <li><em>"Show me the progress of project [name]"</em></li>
+        </ul>
+
+        <h3>Task Management</h3>
+        <ul>
+            <li><em>"Add a task to implement user authentication"</em></li>
+            <li><em>"Mark the login feature as completed"</em></li>
+            <li><em>"Show me all high-priority tasks"</em></li>
+        </ul>
+
+        <h3>AI-Powered Planning</h3>
+        <ul>
+            <li><em>"Help me plan a mobile app development project"</em></li>
+            <li><em>"Analyze the progress of my current project"</em></li>
+            <li><em>"Break down the task 'implement payment system' into subtasks"</em></li>
+        </ul>
+
+        <h2>🔧 Troubleshooting</h2>
+        
+        <h3>Common Issues:</h3>
+        
+        <div class="step">
+            <strong>"Server not responding"</strong>
+            <ul>
+                <li>Check if backend is running: <code>curl http://localhost:8355/api/health</code></li>
+                <li>Verify port 8355 is available</li>
+                <li>Restart your AI tool after adding the MCP server</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <strong>"Command not found"</strong>
+            <ul>
+                <li>Use full path to node executable</li>
+                <li>Verify the path to <code>mcp-server/index.js</code> is correct</li>
+                <li>Check file permissions</li>
+            </ul>
+        </div>
+
+        <h2>📚 Additional Resources</h2>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="https://github.com/DevMayur/SimpleCheckList" class="button">GitHub Repository</a>
+            <a href="https://hub.docker.com/r/mayurkakade/mcp-server" class="button">Docker Hub</a>
+            <a href="/" class="button">Back to Web UI</a>
+        </div>
+
+        <div class="highlight">
+            <strong>Need more help?</strong> Check out our comprehensive documentation on GitHub or create an issue for support.
+        </div>
+    </div>
+</body>
+</html>
