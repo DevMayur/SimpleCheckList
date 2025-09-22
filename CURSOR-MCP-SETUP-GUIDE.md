@@ -69,7 +69,7 @@ npm start
 }
 ```
 
-### Docker Configuration (Alternative - Not Recommended for Cursor)
+### Docker Configuration (Working)
 ```json
 {
   "mcpServers": {
@@ -77,19 +77,17 @@ npm start
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "--network", "host",
+        "-e", "API_BASE_URL=http://host.docker.internal:8355/api",
+        "--add-host=host.docker.internal:host-gateway",
         "mayurkakade/mcp-server:latest",
-        "mcp"
-      ],
-      "env": {
-        "API_BASE_URL": "http://localhost:8355/api"
-      }
+        "sh", "-c", "cd /app/mcp-server && node index.js"
+      ]
     }
   }
 }
 ```
 
-> **Note**: Docker configuration may have issues with Cursor. Use local Node.js configuration for best results.
+> **Note**: This Docker configuration works by connecting to your host backend via `host.docker.internal`.
 
 ## 🔧 Troubleshooting
 

@@ -58,14 +58,41 @@ docker run -d --name simplechecklist \
   mayurkakade/mcp-server:v1.0.2
 ```
 
-### Claude Desktop Integration
+### MCP Integration (Claude Desktop & Cursor)
+
+#### Claude Desktop Integration
 Add to your `claude_desktop_config.json`:
 ```json
 {
   "mcpServers": {
     "simple-checklist": {
       "command": "docker",
-      "args": ["run", "--rm", "-i", "-p", "8355:8355", "mayurkakade/mcp-server:latest", "mcp"]
+      "args": [
+        "run", "--rm", "-i",
+        "-e", "API_BASE_URL=http://host.docker.internal:8355/api",
+        "--add-host=host.docker.internal:host-gateway",
+        "mayurkakade/mcp-server:latest",
+        "sh", "-c", "cd /app/mcp-server && node index.js"
+      ]
+    }
+  }
+}
+```
+
+#### Cursor IDE Integration
+Add to your Cursor MCP settings or `~/.cursor/mcp.json`:
+```json
+{
+  "mcpServers": {
+    "simple-checklist": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "-e", "API_BASE_URL=http://host.docker.internal:8355/api",
+        "--add-host=host.docker.internal:host-gateway",
+        "mayurkakade/mcp-server:latest",
+        "sh", "-c", "cd /app/mcp-server && node index.js"
+      ]
     }
   }
 }

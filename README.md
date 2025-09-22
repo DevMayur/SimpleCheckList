@@ -186,13 +186,11 @@ docker-compose up --build
       "command": "docker",
       "args": [
         "run", "--rm", "-i",
-        "-p", "8355:8355",
-        "simplechecklist/mcp-server:latest",
-        "mcp"
-      ],
-      "env": {
-        "API_BASE_URL": "http://localhost:8355/api"
-      }
+        "-e", "API_BASE_URL=http://host.docker.internal:8355/api",
+        "--add-host=host.docker.internal:host-gateway",
+        "mayurkakade/mcp-server:latest",
+        "sh", "-c", "cd /app/mcp-server && node index.js"
+      ]
     }
   }
 }
