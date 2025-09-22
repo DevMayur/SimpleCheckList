@@ -266,6 +266,27 @@ class Database {
     `;
     return this.query(sql);
   }
+
+  // Additional methods needed for WebSocket integration
+  async getGroup(id) {
+    const sql = 'SELECT * FROM groups WHERE id = ? AND is_archived = 0';
+    return this.get(sql, [id]);
+  }
+
+  async getTaskList(id) {
+    const sql = 'SELECT * FROM task_lists WHERE id = ? AND is_archived = 0';
+    return this.get(sql, [id]);
+  }
+
+  async getTask(id) {
+    const sql = 'SELECT * FROM tasks WHERE id = ?';
+    return this.get(sql, [id]);
+  }
+
+  async getSubtask(id) {
+    const sql = 'SELECT * FROM subtasks WHERE id = ?';
+    return this.get(sql, [id]);
+  }
 }
 
 module.exports = Database;

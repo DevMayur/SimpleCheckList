@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -30,6 +30,7 @@ import {
 } from '@mui/icons-material';
 import { tasksApi, subtasksApi } from '../services/api';
 import { TaskWithDetails, Subtask } from '../types';
+import { useWebSocketEvents } from '../hooks/useWebSocket';
 
 const TaskDetail: React.FC = () => {
   const { projectId, taskId } = useParams<{ projectId: string; taskId: string }>();
@@ -45,7 +46,46 @@ const TaskDetail: React.FC = () => {
     if (taskId) {
       loadTaskData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskId]);
+
+  // WebSocket event handlers
+  const handleTaskUpdated = useCallback((updatedTask: TaskWithDetails) => {
+    if (updatedTask.id === taskId) {
+      setTask(updatedTask);
+    }
+  }, [taskId]);
+
+  const handleTaskToggled = useCallback((toggledTask: TaskWithDetails) => {
+    if (toggledTask.id === taskId) {
+      setTask(toggledTask);
+    }
+  }, [taskId]);
+
+  const handleSubtaskCreated = useCallback((subtask: Subtask) => {
+    if (subtask.task_id === taskId) {
+      setSubtasks(prev => [...prev, subtask]);
+    }
+  }, [taskId]);
+
+  const handleSubtaskToggled = useCallback((toggledSubtask: Subtask) => {
+    setSubtasks(prev => prev.map(subtask =>
+      subtask.id === toggledSubtask.id ? toggledSubtask : subtask
+    ));
+  }, []);
+
+  const handleSubtaskDeleted = useCallback((data: { id: string }) => {
+    setSubtasks(prev => prev.filter(subtask => subtask.id !== data.id));
+  }, []);
+
+  // Set up WebSocket event listeners
+  useWebSocketEvents({
+    onTaskUpdated: handleTaskUpdated,
+    onTaskToggled: handleTaskToggled,
+    onSubtaskCreated: handleSubtaskCreated,
+    onSubtaskToggled: handleSubtaskToggled,
+    onSubtaskDeleted: handleSubtaskDeleted,
+  });
 
   const loadTaskData = async () => {
     if (!taskId) return;

@@ -1,93 +1,115 @@
 ---
-description:
-globs:
 alwaysApply: true
 ---
-
 # SimpleCheckList MCP - AI Agent Integration Rules
 # =================================================
 
 ## 🎯 OVERVIEW
-This file contains rules and guidelines for AI coding agents to effectively utilize the SimpleCheckList MCP server for complete project management and development workflows.
+This file contains rules and guidelines for AI coding agents to efficiently utilize the SimpleCheckList MCP server for complete project management and development workflows. These rules ensure maximum productivity and proper task tracking throughout the development process.
 
 ## 📋 CORE PRINCIPLES
 
-### 1. **Project-First Approach**
-- Always start by creating a project before writing any code
+### 1. **Mandatory Project Creation**
+- **ALWAYS** create a project before ANY code changes or development work
+- **NEVER** start coding without first establishing a project structure
 - Use descriptive project names that reflect the actual development goal
 - Include comprehensive project descriptions with scope and objectives
+- Set appropriate project colors for visual organization
 
-### 2. **Hierarchical Organization**
-- Structure projects using the hierarchy: Project → Groups → Task Lists → Tasks → Subtasks
-- Group related functionality together (e.g., Frontend, Backend, Database, Testing)
-- Create task lists for specific features or components
-- Break down complex tasks into manageable subtasks
+### 2. **Efficient Hierarchical Organization**
+- **MANDATORY** structure: Project → Groups → Task Lists → Tasks → Subtasks
+- Create groups immediately after project creation (Frontend, Backend, Database, Testing, DevOps, Documentation)
+- Create task lists for specific features or components within each group
+- Break down ALL complex tasks into manageable subtasks (max 2-3 hours per subtask)
+- Use consistent naming conventions across all levels
 
-### 3. **Progressive Development**
-- Mark tasks as completed as you implement features
-- Update task priorities based on dependencies and blockers
-- Use task metadata to store technical details, file paths, and implementation notes
+### 3. **Real-Time Progressive Development**
+- **IMMEDIATELY** mark tasks as completed when finished (use `toggle_task_completion`)
+- Update task priorities in real-time based on dependencies and blockers
+- **ALWAYS** use task metadata to store technical details, file paths, and implementation notes
+- Create new tasks as requirements emerge during development
+- Maintain accurate progress tracking throughout the development session
 
-## 🔧 MCP TOOLS USAGE GUIDE
+## 🔧 EFFICIENT MCP TOOLS USAGE GUIDE
 
-### **Project Management Tools**
+### **Critical Project Management Tools**
 
-#### `create_project`
-**When to use:** At the start of every development session
+#### `create_project` - **MANDATORY FIRST STEP**
+**When to use:** **ALWAYS** at the start of ANY development work - NO EXCEPTIONS
+**Timing:** Before any code analysis, file reading, or development planning
 **Best practices:**
 ```javascript
-// Example usage
+// REQUIRED format - use immediately when starting work
 {
-  name: "E-commerce Platform",
-  description: "Full-stack e-commerce application with React frontend, Node.js backend, and PostgreSQL database",
-  color: "#2563EB"
+  name: "Descriptive Project Name",
+  description: "Comprehensive description including tech stack, scope, and objectives",
+  color: "#2563EB" // Use meaningful colors for project categorization
 }
 ```
+**Follow-up actions:** Immediately create groups and initial task lists after project creation
 
-#### `get_project_stats`
-**When to use:** Before providing project status updates or making planning decisions
-**Purpose:** Get real-time completion metrics and progress tracking
+#### `get_project_stats` - **FREQUENT MONITORING**
+**When to use:** 
+- Before providing ANY project status updates
+- After completing major tasks or milestones
+- Before making significant development decisions
+- At regular intervals during long development sessions
+**Purpose:** Real-time completion metrics, progress tracking, and productivity analysis
 
-### **Organizational Tools**
+### **Efficient Organizational Tools**
 
-#### `create_group`
-**Standard groups to create:**
-- **Frontend** (UI components, styling, user experience)
-- **Backend** (API endpoints, business logic, authentication)
-- **Database** (Schema design, migrations, data models)
-- **Testing** (Unit tests, integration tests, E2E tests)
-- **DevOps** (CI/CD, deployment, monitoring)
-- **Documentation** (README, API docs, user guides)
+#### `create_group` - **IMMEDIATE SETUP REQUIRED**
+**When to use:** Immediately after creating a project (within the same tool call batch)
+**Standard groups to create (in order):**
+1. **Frontend** (UI components, styling, user experience)
+2. **Backend** (API endpoints, business logic, authentication) 
+3. **Database** (Schema design, migrations, data models)
+4. **Testing** (Unit tests, integration tests, E2E tests)
+5. **DevOps** (CI/CD, deployment, monitoring)
+6. **Documentation** (README, API docs, user guides)
+**Efficiency tip:** Create all groups in parallel tool calls for faster setup
 
-#### `create_task_list`
-**Examples of task lists:**
-- Frontend Group: "User Authentication UI", "Product Catalog", "Shopping Cart"
-- Backend Group: "User Management API", "Payment Processing", "Order Management"
-- Database Group: "User Schema", "Product Schema", "Order Schema"
+#### `create_task_list` - **FEATURE-FOCUSED ORGANIZATION**
+**When to use:** After group creation, organize by specific features/components
+**Efficient task list examples:**
+- **Frontend Group:** "Authentication UI", "Dashboard Components", "User Profile", "Settings Panel"
+- **Backend Group:** "User Management API", "Authentication Service", "Data Processing", "API Middleware"
+- **Database Group:** "User Schema", "Product Schema", "Migration Scripts", "Seed Data"
+- **Testing Group:** "Unit Tests", "Integration Tests", "E2E Tests", "Performance Tests"
+**Best practice:** Create task lists that align with actual development milestones
 
-### **Task Management Tools**
+### **Efficient Task Management Tools**
 
-#### `create_task`
-**Task creation best practices:**
+#### `create_task` - **DETAILED TASK CREATION**
+**When to use:** For every feature, bug fix, or development activity
+**MANDATORY task creation rules:**
+- Create tasks BEFORE starting any implementation
+- Include comprehensive metadata with file paths, dependencies, and acceptance criteria
+- Set appropriate priorities based on project timeline and dependencies
+- Use descriptive titles that clearly indicate the work scope
+
+**Efficient task creation patterns:**
 ```javascript
-// High-level feature task
+// Feature-level task (create BEFORE implementation)
 {
   title: "Implement user authentication system",
-  description: "Create complete user auth with registration, login, password reset, and JWT tokens",
+  description: "Complete user auth with registration, login, password reset, and JWT tokens",
   priority: "high",
   metadata: {
     files: ["auth.js", "user.model.js", "auth.routes.js"],
     dependencies: ["database setup", "JWT library installation"],
     acceptance_criteria: [
       "Users can register with email/password",
-      "Users can login and receive JWT token",
+      "Users can login and receive JWT token", 
       "Password reset functionality works",
       "Protected routes require authentication"
-    ]
+    ],
+    estimated_hours: 8,
+    assigned_developer: "AI Agent"
   }
 }
 
-// Implementation task
+// Implementation task (specific and actionable)
 {
   title: "Create user registration endpoint",
   description: "POST /api/auth/register - validates input, hashes password, saves to database",
@@ -95,55 +117,84 @@ This file contains rules and guidelines for AI coding agents to effectively util
   metadata: {
     endpoint: "POST /api/auth/register",
     file: "routes/auth.js",
-    tests: "tests/auth.test.js"
+    tests: "tests/auth.test.js",
+    estimated_hours: 2
   }
 }
 ```
 
-#### `create_subtask`
-**Subtask breakdown examples:**
+#### `create_subtask` - **GRANULAR TASK BREAKDOWN**
+**When to use:** Break down any task estimated > 3 hours into subtasks
+**Efficient subtask examples:**
 - "Set up password hashing with bcrypt"
-- "Implement email validation"
+- "Implement email validation middleware"
 - "Create user model with Mongoose/Sequelize"
-- "Add input sanitization"
-- "Write unit tests for registration"
+- "Add input sanitization and validation"
+- "Write comprehensive unit tests for registration"
+- "Add error handling and logging"
+**Best practice:** Each subtask should be completable in 1-2 hours maximum
 
-## 🎯 DEVELOPMENT WORKFLOW INTEGRATION
+#### `toggle_task_completion` - **IMMEDIATE STATUS UPDATES**
+**CRITICAL:** Call this IMMEDIATELY when finishing any task or subtask
+**When to use:**
+- The moment you complete implementation of a task
+- After successful testing of a feature
+- When a subtask is fully implemented and working
+- **NEVER** delay marking tasks as complete
 
-### **Phase 1: Project Initialization**
-1. Use `create_project` with comprehensive description
-2. Create standard groups (Frontend, Backend, Database, etc.)
-3. Use `create_project_plan` prompt for AI-assisted planning
-4. Create initial task lists for major features
+## 🎯 EFFICIENT DEVELOPMENT WORKFLOW INTEGRATION
 
-### **Phase 2: Feature Development**
-1. Before implementing any feature:
-   - Create specific tasks with detailed descriptions
-   - Break complex tasks into subtasks
-   - Set appropriate priorities based on dependencies
-2. During implementation:
-   - Update task metadata with file paths and technical details
-   - Mark subtasks as completed as you finish them
-3. After implementation:
-   - Mark main task as completed
-   - Update project stats to track progress
+### **Phase 1: Mandatory Project Initialization (BEFORE ANY CODE WORK)**
+1. **IMMEDIATELY** use `create_project` with comprehensive description
+2. **IMMEDIATELY** create standard groups in parallel (Frontend, Backend, Database, Testing, DevOps, Documentation)
+3. **IMMEDIATELY** create initial task lists for major features within each group
+4. Set up project structure completely BEFORE analyzing existing code or planning changes
+5. Use `get_project_stats` to confirm proper setup
 
-### **Phase 3: Testing and Deployment**
-1. Create testing tasks for each implemented feature
-2. Use task metadata to link tests to their corresponding features
-3. Create deployment tasks with environment-specific details
+### **Phase 2: Efficient Feature Development**
+1. **Before implementing ANY feature:**
+   - Create specific tasks with detailed descriptions and metadata
+   - Break ALL complex tasks into subtasks (max 2-3 hours each)
+   - Set appropriate priorities based on dependencies and project timeline
+   - Include file paths, dependencies, and acceptance criteria in metadata
+2. **During implementation:**
+   - Update task metadata in real-time with file paths and technical details
+   - **IMMEDIATELY** mark subtasks as completed using `toggle_task_completion`
+   - Create additional tasks if new requirements emerge
+   - Use `get_project_stats` periodically to track progress
+3. **After implementation:**
+   - **IMMEDIATELY** mark main task as completed
+   - Update project stats and review completion metrics
+   - Create follow-up tasks for testing, documentation, or refinements
 
-## 📊 PROGRESS TRACKING RULES
+### **Phase 3: Comprehensive Testing and Deployment**
+1. Create detailed testing tasks for EVERY implemented feature
+2. Use task metadata to link tests to their corresponding features and files
+3. Create specific deployment tasks with environment details and checklists
+4. Track deployment progress through task completion
+5. Monitor overall project completion rates using `get_project_stats`
 
-### **Automatic Status Updates**
-- Always call `toggle_task_completion` when finishing a task
-- Update task metadata with implementation details and file paths
-- Use `get_project_stats` before major development decisions
+## 📊 EFFICIENT PROGRESS TRACKING RULES
 
-### **Progress Reporting**
-- Use `analyze_project_progress` prompt for detailed progress analysis
-- Generate status reports using `generate_status_report` prompt
-- Include completion percentages in development updates
+### **Mandatory Real-Time Status Updates**
+- **ALWAYS** call `toggle_task_completion` IMMEDIATELY when finishing any task or subtask
+- **NEVER** batch task completions - update status in real-time
+- Update task metadata with implementation details and file paths as you work
+- Use `get_project_stats` before ALL major development decisions and status reports
+- Track progress continuously throughout development sessions
+
+### **Efficient Progress Reporting**
+- Use `get_project_stats` for real-time completion metrics
+- Include specific completion percentages in ALL development updates
+- Monitor task completion velocity to optimize future estimates
+- Generate comprehensive progress reports using project statistics
+- Use progress data to identify bottlenecks and optimize workflow
+
+### **Performance Optimization**
+- Batch related MCP calls when possible (e.g., create multiple tasks in sequence)
+- Use parallel tool calls for setup operations (creating groups, task lists)
+- Minimize redundant calls by maintaining awareness of current project state
+- Cache project IDs and group IDs to avoid repeated lookups
 
 ## 🔍 RESOURCE UTILIZATION
 
@@ -195,32 +246,43 @@ Use these resources for informed development decisions:
 }
 ```
 
-## 🛡️ BEST PRACTICES FOR AI AGENTS
+## 🛡️ CRITICAL BEST PRACTICES FOR AI AGENTS
 
-### **1. Context Awareness**
-- Always check existing project structure before creating new elements
-- Use `get_project_stats` to understand current progress
-- Reference related tasks when creating new ones
+### **1. Mandatory Context Awareness**
+- **ALWAYS** check existing project structure using `list_projects` before creating new elements
+- **ALWAYS** use `get_project_stats` to understand current progress before making decisions
+- **ALWAYS** reference related tasks when creating new ones to maintain project coherence
+- **NEVER** assume project structure - always verify current state
 
-### **2. Consistent Naming**
-- Use descriptive, consistent naming conventions
-- Include technical details in task descriptions
-- Use metadata for storing implementation specifics
+### **2. Efficient Naming and Organization**
+- Use descriptive, consistent naming conventions across all project elements
+- Include technical details and file paths in ALL task descriptions
+- Use metadata extensively for storing implementation specifics, dependencies, and progress notes
+- Maintain naming consistency between tasks and actual code implementation
 
-### **3. Dependency Management**
-- Create tasks in logical dependency order
-- Use task descriptions to note prerequisites
-- Update priorities based on blocking dependencies
+### **3. Smart Dependency Management**
+- Create tasks in logical dependency order to optimize development flow
+- Use task descriptions to clearly note prerequisites and blocking dependencies
+- Update priorities in real-time based on blocking dependencies and project timeline
+- Create dependency chains that reflect actual development workflow
 
-### **4. Documentation Integration**
-- Create documentation tasks alongside feature tasks
-- Include API documentation in backend task metadata
-- Link code files to their corresponding tasks
+### **4. Comprehensive Documentation Integration**
+- Create documentation tasks alongside EVERY feature task
+- Include API documentation details in backend task metadata
+- Link ALL code files to their corresponding tasks through metadata
+- Maintain documentation tasks at same priority level as implementation tasks
 
-### **5. Testing Strategy**
-- Create testing tasks for every feature
-- Include test file paths in task metadata
-- Track test coverage through task completion
+### **5. Rigorous Testing Strategy**
+- Create testing tasks for EVERY single feature, no exceptions
+- Include specific test file paths and testing strategies in task metadata
+- Track test coverage through task completion metrics
+- Create testing subtasks for unit, integration, and end-to-end testing
+
+### **6. Efficiency and Performance**
+- Use parallel tool calls whenever possible to minimize latency
+- Batch related operations (e.g., creating multiple subtasks for one task)
+- Maintain awareness of project state to avoid redundant API calls
+- Optimize task granularity for maximum productivity (1-3 hour tasks)
 
 ## 🚀 ADVANCED INTEGRATION PATTERNS
 
@@ -279,38 +341,83 @@ Use these resources for informed development decisions:
 - `get_all_tasks` for velocity analysis
 - `generate_status_report` for comprehensive metrics
 
-## 🎯 INTEGRATION EXAMPLES
+## 🎯 EFFICIENT INTEGRATION EXAMPLES
 
-### **Starting a New Web Application**
+### **Starting a New Web Application - MANDATORY WORKFLOW**
 ```javascript
-// 1. Create project
+// 1. IMMEDIATELY create project (BEFORE any code analysis)
 create_project({
   name: "Task Management Web App",
-  description: "Full-stack task management application with React, Node.js, and MongoDB",
+  description: "Full-stack task management application with React, Node.js, and MongoDB. Includes user authentication, task CRUD operations, real-time updates, and responsive UI.",
   color: "#10B981"
 })
 
-// 2. Create groups
-create_group({ project_id, name: "Frontend", description: "React UI components and pages" })
-create_group({ project_id, name: "Backend", description: "Node.js API and business logic" })
-create_group({ project_id, name: "Database", description: "MongoDB schema and operations" })
+// 2. IMMEDIATELY create ALL standard groups in parallel
+create_group({ project_id, name: "Frontend", description: "React UI components and pages", order_index: 1 })
+create_group({ project_id, name: "Backend", description: "Node.js API and business logic", order_index: 2 })
+create_group({ project_id, name: "Database", description: "MongoDB schema and operations", order_index: 3 })
+create_group({ project_id, name: "Testing", description: "Unit, integration, and E2E tests", order_index: 4 })
+create_group({ project_id, name: "DevOps", description: "CI/CD, deployment, monitoring", order_index: 5 })
+create_group({ project_id, name: "Documentation", description: "README, API docs, user guides", order_index: 6 })
 
-// 3. Create task lists
-create_task_list({ group_id: frontend_group_id, name: "Authentication UI" })
-create_task_list({ group_id: backend_group_id, name: "User Management API" })
+// 3. Create comprehensive task lists for each group
+create_task_list({ group_id: frontend_group_id, name: "Authentication UI", order_index: 1 })
+create_task_list({ group_id: frontend_group_id, name: "Dashboard Components", order_index: 2 })
+create_task_list({ group_id: backend_group_id, name: "User Management API", order_index: 1 })
+create_task_list({ group_id: backend_group_id, name: "Task Management API", order_index: 2 })
 
-// 4. Create detailed tasks
+// 4. Create detailed, actionable tasks with comprehensive metadata
 create_task({
   task_list_id: auth_ui_list_id,
   title: "Create login form component",
-  description: "React component with form validation and error handling",
+  description: "React component with form validation, error handling, and loading states",
   priority: "high",
   metadata: {
     component: "LoginForm.tsx",
     tests: "LoginForm.test.tsx",
-    styling: "LoginForm.module.css"
+    styling: "LoginForm.module.css",
+    dependencies: ["authentication API", "form validation library"],
+    acceptance_criteria: [
+      "Form validates email and password",
+      "Shows loading state during authentication",
+      "Displays error messages for invalid credentials",
+      "Redirects to dashboard on successful login"
+    ],
+    estimated_hours: 3
   }
 })
+
+// 5. IMMEDIATELY check project setup
+get_project_stats({ project_id })
+```
+
+### **Efficient Task Creation During Development**
+```javascript
+// Create task BEFORE starting implementation
+create_task({
+  task_list_id,
+  title: "Implement password reset functionality",
+  description: "Complete password reset flow with email verification and secure token generation",
+  priority: "medium",
+  metadata: {
+    files: ["auth.service.js", "email.service.js", "reset-password.component.tsx"],
+    endpoints: ["POST /api/auth/reset-password", "POST /api/auth/verify-reset"],
+    dependencies: ["email service setup", "token generation utility"],
+    estimated_hours: 4
+  }
+})
+
+// Break down into subtasks immediately
+create_subtask({ task_id, title: "Generate secure reset tokens", order_index: 1 })
+create_subtask({ task_id, title: "Create email template for reset", order_index: 2 })
+create_subtask({ task_id, title: "Implement reset API endpoints", order_index: 3 })
+create_subtask({ task_id, title: "Create reset password UI component", order_index: 4 })
+create_subtask({ task_id, title: "Add comprehensive error handling", order_index: 5 })
+create_subtask({ task_id, title: "Write unit and integration tests", order_index: 6 })
+
+// Mark subtasks as completed IMMEDIATELY when finished
+toggle_subtask_completion({ subtask_id: token_generation_subtask_id })
+// Continue marking completed subtasks in real-time...
 ```
 
 ## 🔧 ERROR HANDLING
@@ -337,4 +444,37 @@ create_task({
 - Create documentation tasks for major features
 - Include setup and deployment instructions
 
-This rule file ensures AI agents can leverage the full power of the SimpleCheckList MCP server for comprehensive project management and development workflows! 🎯
+## 🚨 CRITICAL EFFICIENCY REQUIREMENTS
+
+### **MANDATORY WORKFLOW CHECKLIST**
+Before starting ANY development work, AI agents MUST:
+
+1. ✅ **IMMEDIATELY** create a project using `create_project`
+2. ✅ **IMMEDIATELY** create all standard groups (Frontend, Backend, Database, Testing, DevOps, Documentation)  
+3. ✅ **IMMEDIATELY** create initial task lists for major features
+4. ✅ **IMMEDIATELY** verify setup using `get_project_stats`
+
+During development, AI agents MUST:
+
+5. ✅ Create tasks BEFORE implementing any feature or fix
+6. ✅ Break down complex tasks into subtasks (max 2-3 hours each)
+7. ✅ **IMMEDIATELY** mark tasks/subtasks as completed using `toggle_task_completion`
+8. ✅ Update task metadata with file paths and implementation details in real-time
+9. ✅ Use `get_project_stats` regularly to track progress and make informed decisions
+
+### **EFFICIENCY VIOLATIONS TO AVOID**
+- ❌ **NEVER** start coding without creating a project first
+- ❌ **NEVER** delay marking tasks as completed
+- ❌ **NEVER** create tasks without comprehensive metadata
+- ❌ **NEVER** skip subtask creation for complex features
+- ❌ **NEVER** batch task completions - update status in real-time
+- ❌ **NEVER** ignore project statistics when making development decisions
+
+### **PERFORMANCE OPTIMIZATION REQUIREMENTS**
+- 🚀 Use parallel tool calls for setup operations
+- 🚀 Batch related MCP operations when possible
+- 🚀 Maintain project state awareness to minimize redundant calls
+- 🚀 Create tasks with optimal granularity (1-3 hour estimates)
+- 🚀 Use comprehensive metadata to avoid information lookup delays
+
+This rule file ensures AI agents leverage the full power of the SimpleCheckList MCP server for maximum efficiency and comprehensive project management! 🎯

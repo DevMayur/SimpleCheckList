@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Box,
   Card,
@@ -19,6 +19,8 @@ import { Add, Folder, CheckCircle } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { projectsApi } from '../services/api';
 import { Project, ProjectStats } from '../types';
+import { useWebSocketEvents } from '../hooks/useWebSocket';
+import ConnectionStatus from './ConnectionStatus';
 
 const ProjectList: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -32,6 +34,42 @@ const ProjectList: React.FC = () => {
   useEffect(() => {
     loadProjects();
   }, []);
+
+  // WebSocket event handlers
+  const handleProjectCreated = useCallback((project: Project) => {
+    setProjects(prev => [project, ...prev]);
+    // Load stats for the new project
+    projectsApi.getStats(project.id).then(stats => {
+      setProjectStats(prev => ({ ...prev, [project.id]: stats }));
+    }).catch(() => {
+      // Ignore stats loading errors for new projects
+    });
+  }, []);
+
+  const handleProjectUpdated = useCallback((project: Project) => {
+    setProjects(prev => prev.map(p => p.id === project.id ? project : p));
+    // Refresh stats for updated project
+    projectsApi.getStats(project.id).then(stats => {
+      setProjectStats(prev => ({ ...prev, [project.id]: stats }));
+    }).catch(() => {
+      // Ignore stats loading errors
+    });
+  }, []);
+
+  const handleProjectDeleted = useCallback((data: { id: string }) => {
+    setProjects(prev => prev.filter(p => p.id !== data.id));
+    setProjectStats(prev => {
+      const { [data.id]: deleted, ...rest } = prev;
+      return rest;
+    });
+  }, []);
+
+  // Set up WebSocket event listeners
+  useWebSocketEvents({
+    onProjectCreated: handleProjectCreated,
+    onProjectUpdated: handleProjectUpdated,
+    onProjectDeleted: handleProjectDeleted,
+  });
 
   const loadProjects = async () => {
     try {
@@ -92,15 +130,20 @@ const ProjectList: React.FC = () => {
         <Typography variant="h4" component="h1" fontWeight="600">
           Projects
         </Typography>
-        <Button
-          variant="contained"
-          startIcon={<Add />}
-          onClick={() => setOpenDialog(true)}
-          sx={{ borderRadius: 2 }}
-        >
-          New Project
-        </Button>
+        <Box display="flex" alignItems="center" gap={2}>
+          <ConnectionStatus showInline />
+          <Button
+            variant="contained"
+            startIcon={<Add />}
+            onClick={() => setOpenDialog(true)}
+            sx={{ borderRadius: 2 }}
+          >
+            New Project
+          </Button>
+        </Box>
       </Box>
+      
+      <ConnectionStatus showSnackbar />
 
       {error && (
         <Alert severity="error" sx={{ mb: 2 }} onClose={() => setError(null)}>

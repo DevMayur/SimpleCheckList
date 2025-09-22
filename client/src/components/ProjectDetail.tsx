@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -35,6 +35,7 @@ import {
 } from '@mui/icons-material';
 import { projectsApi, groupsApi, taskListsApi, tasksApi } from '../services/api';
 import { Project, Group, TaskList, Task } from '../types';
+import { useProjectWebSocket } from '../hooks/useWebSocket';
 
 const ProjectDetail: React.FC = () => {
   const { projectId } = useParams<{ projectId: string }>();
@@ -58,7 +59,118 @@ const ProjectDetail: React.FC = () => {
     if (projectId) {
       loadProjectData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId]);
+
+  // WebSocket event handlers
+  const handleGroupCreated = useCallback((group: Group) => {
+    if (group.project_id === projectId) {
+      setGroups(prev => [...prev, group]);
+    }
+  }, [projectId]);
+
+  const handleGroupUpdated = useCallback((group: Group) => {
+    setGroups(prev => prev.map(g => g.id === group.id ? group : g));
+  }, []);
+
+  const handleGroupDeleted = useCallback((data: { id: string }) => {
+    setGroups(prev => prev.filter(g => g.id !== data.id));
+    // Also clean up related task lists and tasks
+    setTaskLists(prev => {
+      const { [data.id]: deleted, ...rest } = prev;
+      return rest;
+    });
+    setTasks(prev => {
+      const updatedTasks = { ...prev };
+      Object.keys(prev).forEach(taskListId => {
+        const taskList = Object.values(taskLists).flat().find(tl => tl.id === taskListId);
+        if (taskList && taskList.group_id === data.id) {
+          delete updatedTasks[taskListId];
+        }
+      });
+      return updatedTasks;
+    });
+  }, [taskLists]);
+
+  const handleTaskListCreated = useCallback((taskList: TaskList) => {
+    setTaskLists(prev => ({
+      ...prev,
+      [taskList.group_id]: [...(prev[taskList.group_id] || []), taskList]
+    }));
+  }, []);
+
+  const handleTaskListUpdated = useCallback((taskList: TaskList) => {
+    setTaskLists(prev => ({
+      ...prev,
+      [taskList.group_id]: prev[taskList.group_id]?.map(tl => 
+        tl.id === taskList.id ? taskList : tl
+      ) || []
+    }));
+  }, []);
+
+  const handleTaskListDeleted = useCallback((data: { id: string }) => {
+    setTaskLists(prev => {
+      const updated = { ...prev };
+      Object.keys(updated).forEach(groupId => {
+        updated[groupId] = updated[groupId].filter(tl => tl.id !== data.id);
+      });
+      return updated;
+    });
+    // Clean up related tasks
+    setTasks(prev => {
+      const { [data.id]: deleted, ...rest } = prev;
+      return rest;
+    });
+  }, []);
+
+  const handleTaskCreated = useCallback((task: Task) => {
+    setTasks(prev => ({
+      ...prev,
+      [task.task_list_id]: [...(prev[task.task_list_id] || []), task]
+    }));
+  }, []);
+
+  const handleTaskUpdated = useCallback((task: Task) => {
+    setTasks(prev => ({
+      ...prev,
+      [task.task_list_id]: prev[task.task_list_id]?.map(t => 
+        t.id === task.id ? task : t
+      ) || []
+    }));
+  }, []);
+
+  const handleTaskToggled = useCallback((task: Task) => {
+    setTasks(prev => ({
+      ...prev,
+      [task.task_list_id]: prev[task.task_list_id]?.map(t => 
+        t.id === task.id ? task : t
+      ) || []
+    }));
+  }, []);
+
+  const handleTaskDeleted = useCallback((data: { id: string }) => {
+    setTasks(prev => {
+      const updated = { ...prev };
+      Object.keys(updated).forEach(taskListId => {
+        updated[taskListId] = updated[taskListId].filter(t => t.id !== data.id);
+      });
+      return updated;
+    });
+  }, []);
+
+  // Set up WebSocket connection and event listeners for this project
+  useProjectWebSocket(projectId || null, {
+    onGroupCreated: handleGroupCreated,
+    onGroupUpdated: handleGroupUpdated,
+    onGroupDeleted: handleGroupDeleted,
+    onTaskListCreated: handleTaskListCreated,
+    onTaskListUpdated: handleTaskListUpdated,
+    onTaskListDeleted: handleTaskListDeleted,
+    onTaskCreated: handleTaskCreated,
+    onTaskUpdated: handleTaskUpdated,
+    onTaskToggled: handleTaskToggled,
+    onTaskDeleted: handleTaskDeleted,
+  });
 
   const loadProjectData = async () => {
     if (!projectId) return;
